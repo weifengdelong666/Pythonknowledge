@@ -1,0 +1,3730 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python 3 全景知识地图 · 从入门到实战</title>
+<meta name="description" content="基于菜鸟教程 Python3 教程的交互式思维导图：13 大模块、95 个主题、383 个知识点、95 个新手示例。">
+<style>
+/* ============================================================
+   Python 3 全景知识地图 — 交互层样式
+   ============================================================ */
+:root {
+  --paper: #f7f4ec;
+  --paper-2: #fbf9f4;
+  --paper-3: #fffdf8;
+  --ink: #14213d;
+  --ink-2: #243552;
+  --muted: #6b7688;
+  --muted-2: #98a1b0;
+  --line: rgba(20, 33, 61, 0.11);
+  --line-strong: rgba(20, 33, 61, 0.18);
+  --navy: #0b1b33;
+  --navy-2: #132b4d;
+  --blue: #2f6bff;
+  --yellow: #ffc93c;
+  --danger: #d64545;
+  --shadow-sm: 0 4px 14px rgba(20, 33, 61, 0.08);
+  --shadow-md: 0 14px 38px rgba(20, 33, 61, 0.13);
+  --shadow-lg: 0 28px 80px rgba(20, 33, 61, 0.18);
+  --sans: "Microsoft YaHei UI", "Microsoft YaHei", "Noto Sans SC",
+    "PingFang SC", "Source Han Sans SC", sans-serif;
+  --mono: "Cascadia Code", "JetBrains Mono", "SFMono-Regular", Consolas,
+    "Liberation Mono", monospace;
+  --ease: cubic-bezier(0.22, 0.72, 0.24, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  overflow: hidden;
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  background:
+    radial-gradient(900px 620px at 8% 4%, rgba(47, 107, 255, 0.07), transparent 62%),
+    radial-gradient(1000px 700px at 96% 96%, rgba(255, 201, 60, 0.12), transparent 64%),
+    var(--paper);
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  color: inherit;
+}
+
+::selection {
+  background: rgba(47, 107, 255, 0.2);
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  min-height: 0;
+}
+
+/* ---------------- 顶栏 ---------------- */
+.topbar {
+  position: relative;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  height: 76px;
+  padding: 0 22px;
+  border-bottom: 1px solid var(--line);
+  background: rgba(251, 249, 244, 0.86);
+  backdrop-filter: blur(18px) saturate(1.2);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 276px;
+}
+
+.logo {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  color: #fff;
+  font-family: var(--mono);
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -1.5px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.16), transparent 48%),
+    linear-gradient(145deg, #2f6bff 0%, #1745b8 58%, #0b1b33 100%);
+  box-shadow: 0 10px 24px rgba(47, 107, 255, 0.28);
+}
+
+.logo::after {
+  content: "";
+  position: absolute;
+  right: 7px;
+  bottom: 8px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--yellow);
+  box-shadow: 0 0 0 3px rgba(255, 201, 60, 0.2);
+}
+
+.brand h1 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+}
+
+.brand p {
+  margin: 3px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 0.4px;
+}
+
+.search-wrap {
+  position: relative;
+  flex: 1;
+  max-width: 430px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  height: 42px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.78);
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+}
+
+.search-box:focus-within {
+  border-color: rgba(47, 107, 255, 0.5);
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(47, 107, 255, 0.09);
+}
+
+.search-box svg {
+  flex: none;
+  color: var(--muted);
+}
+
+.search-box input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  color: var(--ink);
+  background: transparent;
+  font-size: 13px;
+}
+
+.search-box input::placeholder {
+  color: var(--muted-2);
+}
+
+.search-key {
+  flex: none;
+  padding: 3px 6px;
+  border: 1px solid var(--line);
+  border-bottom-width: 2px;
+  border-radius: 6px;
+  color: var(--muted);
+  background: var(--paper-2);
+  font-family: var(--mono);
+  font-size: 10px;
+}
+
+.search-results {
+  position: absolute;
+  top: calc(100% + 9px);
+  left: 0;
+  right: 0;
+  z-index: 60;
+  max-height: 430px;
+  overflow-y: auto;
+  padding: 7px;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  background: #fffdf8;
+  box-shadow: var(--shadow-lg);
+  backdrop-filter: blur(12px);
+  display: none;
+}
+
+.search-results.open {
+  display: block;
+  animation: dropIn 0.18s var(--ease);
+}
+
+.search-empty {
+  padding: 22px 14px;
+  color: var(--muted);
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.result {
+  display: grid;
+  grid-template-columns: 9px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 10px;
+  border: 0;
+  border-radius: 10px;
+  text-align: left;
+  background: transparent;
+  cursor: pointer;
+}
+
+.result:hover,
+.result.active {
+  background: rgba(20, 33, 61, 0.05);
+}
+
+.result-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--c, var(--blue));
+}
+
+.result-main {
+  min-width: 0;
+}
+
+.result-title {
+  overflow: hidden;
+  color: var(--ink);
+  font-size: 12.5px;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.result-path {
+  overflow: hidden;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 10.5px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.result-type {
+  padding: 2px 6px;
+  border-radius: 5px;
+  color: var(--muted);
+  background: rgba(20, 33, 61, 0.05);
+  font-size: 9px;
+  letter-spacing: 0.5px;
+}
+
+mark {
+  padding: 0 1px;
+  border-radius: 2px;
+  color: inherit;
+  background: rgba(255, 201, 60, 0.55);
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  color: var(--ink-2);
+  background: rgba(255, 255, 255, 0.68);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: transform 0.15s, background 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.btn:hover {
+  border-color: var(--line-strong);
+  background: #fff;
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn svg {
+  flex: none;
+}
+
+.btn-primary {
+  border-color: transparent;
+  color: #fff;
+  background: var(--navy);
+  box-shadow: 0 8px 20px rgba(11, 27, 51, 0.22);
+}
+
+.btn-primary:hover {
+  border-color: transparent;
+  background: #162f55;
+}
+
+.btn-primary .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--yellow);
+}
+
+.btn-icon {
+  width: 36px;
+  padding: 0;
+}
+
+.progress-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 11px 0 7px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.62);
+}
+
+.ring {
+  --p: 0;
+  display: grid;
+  place-items: center;
+  width: 23px;
+  height: 23px;
+  border-radius: 50%;
+  background: conic-gradient(var(--blue) calc(var(--p) * 1%), rgba(20, 33, 61, 0.1) 0);
+}
+
+.ring::after {
+  content: "";
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: var(--paper-2);
+}
+
+.progress-pill span {
+  color: var(--muted);
+  font-size: 10.5px;
+  font-weight: 700;
+}
+
+/* ---------------- 主布局 ---------------- */
+.shell {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.sidebar {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  width: 252px;
+  min-width: 252px;
+  padding: 18px 13px 14px;
+  border-right: 1px solid var(--line);
+  background: rgba(255, 253, 248, 0.55);
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.side-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  margin-bottom: 9px;
+  color: var(--muted);
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.side-label b {
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.nav-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 7px;
+  width: 100%;
+  padding: 6px 9px;
+  border: 1px solid transparent;
+  border-radius: 11px;
+  text-align: left;
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.18s, border-color 0.18s, box-shadow 0.18s;
+}
+
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.65);
+}
+
+.nav-item.active {
+  border-color: var(--line);
+  background: #fff;
+  box-shadow: var(--shadow-sm);
+}
+
+.nav-num {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 7px;
+  color: #fff;
+  background: var(--c);
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 700;
+  opacity: 0.9;
+}
+
+.nav-main {
+  min-width: 0;
+}
+
+.nav-title {
+  display: block;
+  overflow: hidden;
+  color: var(--ink-2);
+  font-size: 12px;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nav-sub {
+  display: block;
+  overflow: hidden;
+  margin-top: 1px;
+  color: var(--muted-2);
+  font-size: 9.5px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nav-count {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 9.5px;
+}
+
+.nav-bar {
+  grid-column: 2 / 4;
+  height: 2px;
+  margin-top: 2px;
+  border-radius: 2px;
+  background: rgba(20, 33, 61, 0.07);
+  overflow: hidden;
+}
+
+.nav-bar i {
+  display: block;
+  width: var(--w, 0%);
+  height: 100%;
+  border-radius: 2px;
+  background: var(--c);
+  transition: width 0.35s var(--ease);
+}
+
+.side-route {
+  position: relative;
+  margin-top: auto;
+  padding: 14px;
+  border: 1px solid rgba(47, 107, 255, 0.16);
+  border-radius: 14px;
+  background:
+    radial-gradient(120px 80px at 100% 0, rgba(255, 201, 60, 0.2), transparent 70%),
+    linear-gradient(145deg, rgba(47, 107, 255, 0.08), rgba(255, 255, 255, 0.5));
+}
+
+.side-route h3 {
+  margin: 0 0 4px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.side-route p {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.mini-steps {
+  display: flex;
+  gap: 3px;
+  margin-bottom: 10px;
+}
+
+.mini-steps i {
+  flex: 1;
+  height: 3px;
+  border-radius: 3px;
+  background: rgba(47, 107, 255, 0.18);
+}
+
+.mini-steps i:nth-child(1) { background: #2f6bff; }
+.mini-steps i:nth-child(2) { background: #0e9f8a; }
+.mini-steps i:nth-child(3) { background: #e4572e; }
+.mini-steps i:nth-child(4) { background: #7a5af8; }
+
+.side-route .btn {
+  width: 100%;
+  height: 31px;
+  font-size: 10.5px;
+}
+
+.side-foot {
+  padding: 12px 8px 0;
+  color: var(--muted-2);
+  font-size: 9px;
+  line-height: 1.7;
+}
+
+@media (max-height: 960px) {
+  .side-route p,
+  .side-route .mini-steps {
+    display: none;
+  }
+
+  .side-route {
+    padding: 12px;
+  }
+}
+
+/* ---------------- 舞台与地图 ---------------- */
+.stage {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  cursor: grab;
+  touch-action: none;
+  background:
+    radial-gradient(700px 500px at 50% 48%, rgba(255, 255, 255, 0.52), transparent 70%),
+    radial-gradient(900px 640px at 50% 48%, rgba(47, 107, 255, 0.045), transparent 70%);
+}
+
+.stage:active {
+  cursor: grabbing;
+}
+
+.stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.55;
+  background-image: radial-gradient(rgba(20, 33, 61, 0.13) 0.7px, transparent 0.7px);
+  background-size: 22px 22px;
+  mask-image: radial-gradient(ellipse at center, #000 20%, transparent 78%);
+}
+
+.world {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+
+#links {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 1px;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.deco {
+  position: absolute;
+  color: rgba(20, 33, 61, 0.055);
+  font-family: var(--mono);
+  font-weight: 800;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* 根节点 */
+.root {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 12;
+  display: grid;
+  place-items: center;
+  width: 206px;
+  height: 206px;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+}
+
+.root-glow {
+  position: absolute;
+  inset: -55px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(47, 107, 255, 0.16), transparent 68%);
+  pointer-events: none;
+}
+
+.root-ring {
+  position: absolute;
+  inset: -18px;
+  border: 1px dashed rgba(47, 107, 255, 0.32);
+  border-radius: 50%;
+  animation: spin 40s linear infinite;
+}
+
+.root-ring::before,
+.root-ring::after {
+  content: "";
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--yellow);
+  box-shadow: 0 0 0 4px rgba(255, 201, 60, 0.16);
+}
+
+.root-ring::before {
+  left: 7px;
+  top: 18px;
+}
+
+.root-ring::after {
+  right: 2px;
+  bottom: 34px;
+  background: #2f6bff;
+  box-shadow: 0 0 0 4px rgba(47, 107, 255, 0.14);
+}
+
+.root-core {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 186px;
+  height: 186px;
+  border: 3px solid rgba(255, 201, 60, 0.92);
+  border-radius: 50%;
+  color: #fff;
+  background:
+    radial-gradient(circle at 32% 24%, rgba(255, 255, 255, 0.18), transparent 42%),
+    linear-gradient(150deg, #143f82 0%, #0d2547 48%, #081528 100%);
+  box-shadow:
+    0 24px 60px rgba(11, 27, 51, 0.28),
+    inset 0 0 0 7px rgba(255, 255, 255, 0.05);
+}
+
+.root-py {
+  position: relative;
+  margin-bottom: -2px;
+  color: var(--yellow);
+  font-family: var(--mono);
+  font-size: 35px;
+  font-weight: 900;
+  letter-spacing: -3px;
+}
+
+.root-py::after {
+  content: "";
+  position: absolute;
+  right: -8px;
+  bottom: 5px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #2f6bff;
+}
+
+.root-title {
+  margin-top: 4px;
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.root-sub {
+  margin-top: 3px;
+  color: rgba(255, 255, 255, 0.56);
+  font-size: 9px;
+  letter-spacing: 2.4px;
+}
+
+/* 节点通用 */
+.node {
+  position: absolute;
+  z-index: 5;
+  cursor: pointer;
+  outline: none;
+}
+
+.node .dot {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 7px;
+  height: 7px;
+  border: 1.5px solid var(--paper);
+  border-radius: 50%;
+  background: var(--c, var(--blue));
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--c, var(--blue)) 16%, transparent);
+}
+
+.node .label {
+  position: absolute;
+  display: block;
+  white-space: nowrap;
+  transition: opacity 0.18s, transform 0.18s;
+}
+
+.node.right .label {
+  left: 13px;
+}
+
+.node.left .label {
+  right: 13px;
+  text-align: right;
+}
+
+.node.branch {
+  z-index: 8;
+}
+
+.node.branch .dot {
+  width: 9px;
+  height: 9px;
+  border-width: 2px;
+}
+
+.node.branch .pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 7px 11px 7px 8px;
+  border: 1px solid color-mix(in srgb, var(--c) 28%, white);
+  border-radius: 13px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.72), transparent 60%),
+    var(--tint);
+  box-shadow: 0 5px 16px rgba(20, 33, 61, 0.08);
+  transition: transform 0.18s var(--ease), box-shadow 0.18s, border-color 0.18s;
+}
+
+.node.branch:hover .pill {
+  border-color: color-mix(in srgb, var(--c) 55%, white);
+  box-shadow: 0 10px 24px rgba(20, 33, 61, 0.14);
+  transform: translateY(-2px);
+}
+
+.node.branch.selected .pill {
+  border-color: var(--c);
+  box-shadow:
+    0 0 0 4px color-mix(in srgb, var(--c) 12%, transparent),
+    0 12px 28px rgba(20, 33, 61, 0.16);
+}
+
+.node.branch .badge {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  color: #fff;
+  background: var(--c);
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.node.branch .title {
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+}
+
+.node.branch .count {
+  margin-left: 1px;
+  color: color-mix(in srgb, var(--c) 70%, #526074);
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.node.branch .chev {
+  display: grid;
+  place-items: center;
+  width: 17px;
+  height: 17px;
+  margin-left: 2px;
+  border-radius: 6px;
+  color: var(--c);
+  background: rgba(255, 255, 255, 0.66);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  transition: background 0.15s, transform 0.2s;
+}
+
+.node.branch .chev:hover {
+  background: #fff;
+  transform: scale(1.08);
+}
+
+.node.left.branch .pill {
+  flex-direction: row-reverse;
+}
+
+.node.left.branch .chev {
+  margin-left: 0;
+  margin-right: 2px;
+}
+
+.node.topic {
+  z-index: 6;
+}
+
+.node.topic .label {
+  top: -10px;
+  padding: 3px 7px;
+  border-radius: 7px;
+  color: var(--ink-2);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.1px;
+  background: rgba(251, 249, 244, 0.72);
+  transition: background 0.15s, color 0.15s;
+}
+
+.node.topic:hover .label,
+.node.topic.selected .label {
+  color: var(--c);
+  background: #fff;
+  box-shadow: var(--shadow-sm);
+}
+
+.node.topic .dot {
+  width: 6px;
+  height: 6px;
+}
+
+.node.leaf {
+  z-index: 4;
+}
+
+.node.leaf .label {
+  top: -9px;
+  padding: 1px 5px;
+  border-radius: 5px;
+  color: #536074;
+  font-size: 10.5px;
+  font-weight: 500;
+  background: rgba(251, 249, 244, 0.62);
+}
+
+.node.leaf:hover .label,
+.node.leaf.selected .label {
+  color: var(--ink);
+  background: #fff;
+}
+
+.node.leaf .dot {
+  width: 4px;
+  height: 4px;
+  border-width: 1px;
+  opacity: 0.72;
+}
+
+.node.mastered .label::after {
+  content: "✓";
+  display: inline-block;
+  margin-left: 4px;
+  color: #0e9f8a;
+  font-size: 9px;
+  font-weight: 900;
+}
+
+.node.left.mastered .label::after {
+  margin-right: 4px;
+  margin-left: 0;
+}
+
+.node.match .label {
+  box-shadow: 0 0 0 2px rgba(255, 201, 60, 0.85);
+}
+
+.node.new {
+  animation: nodeIn 0.34s var(--ease) both;
+}
+
+.node.dimmed {
+  opacity: 0.28;
+}
+
+.link {
+  fill: none;
+  stroke-linecap: round;
+  transition: opacity 0.2s;
+}
+
+.link.branch-link {
+  stroke-width: 2.4;
+  opacity: 0.55;
+}
+
+.link.topic-link {
+  stroke-width: 1.5;
+  opacity: 0.42;
+}
+
+.link.leaf-link {
+  stroke-width: 1;
+  opacity: 0.26;
+}
+
+.link.dimmed {
+  opacity: 0.08;
+}
+
+/* 地图控制 */
+.map-controls {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  z-index: 15;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  background: rgba(255, 253, 248, 0.84);
+  box-shadow: var(--shadow-md);
+  backdrop-filter: blur(12px);
+}
+
+.map-controls button {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 8px;
+  color: var(--ink-2);
+  background: transparent;
+  cursor: pointer;
+}
+
+.map-controls button:hover {
+  background: rgba(20, 33, 61, 0.06);
+}
+
+.map-controls .divider {
+  height: 1px;
+  margin: 1px 4px;
+  background: var(--line);
+}
+
+.zoom-label {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 8.5px;
+  text-align: center;
+}
+
+.map-hint {
+  position: absolute;
+  left: 18px;
+  bottom: 18px;
+  z-index: 14;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 11px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--muted);
+  background: rgba(255, 253, 248, 0.78);
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(10px);
+  font-size: 9.5px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(5px);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.map-hint.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.map-hint b {
+  color: var(--ink-2);
+  font-weight: 700;
+}
+
+/* 移动端列表（桌面隐藏） */
+.mobile-list {
+  display: none;
+}
+
+.m-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.m-head h2 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+}
+
+.m-head button {
+  height: 30px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink-2);
+  background: rgba(255, 255, 255, 0.7);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.m-sub {
+  margin: 4px 0 14px;
+  color: var(--muted);
+  font-size: 10.5px;
+  line-height: 1.6;
+}
+
+.m-branch {
+  position: relative;
+  padding: 12px 12px 12px 14px;
+  margin-bottom: 9px;
+  border: 1px solid color-mix(in srgb, var(--c) 22%, white);
+  border-radius: 14px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.58), transparent 60%),
+    var(--tint);
+}
+
+.m-branch::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 14px;
+  bottom: 14px;
+  width: 4px;
+  border-radius: 0 4px 4px 0;
+  background: var(--c);
+}
+
+.m-branch-head {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.m-num {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  color: #fff;
+  background: var(--c);
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 900;
+}
+
+.m-branch-head h3 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.m-branch-head p {
+  margin: 2px 0 0;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.m-branch-head .m-count {
+  margin-left: auto;
+  color: color-mix(in srgb, var(--c) 70%, #6b7688);
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.m-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.m-chips button {
+  padding: 5px 8px;
+  border: 1px solid rgba(20, 33, 61, 0.09);
+  border-radius: 6px;
+  color: #536074;
+  background: rgba(255, 255, 255, 0.55);
+  font-size: 10.5px;
+  line-height: 1.3;
+}
+
+.m-chips button:active {
+  background: #fff;
+}
+
+/* ---------------- 详情抽屉 ---------------- */
+.detail {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 32;
+  display: flex;
+  flex-direction: column;
+  width: 442px;
+  max-width: calc(100vw - 30px);
+  border-left: 1px solid var(--line);
+  background: var(--paper-3);
+  box-shadow: -24px 0 60px rgba(20, 33, 61, 0.13);
+  transform: translateX(103%);
+  transition: transform 0.38s var(--ease);
+  pointer-events: none;
+}
+
+.detail.open {
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.detail-head {
+  position: relative;
+  flex: none;
+  padding: 18px 20px 13px;
+  border-bottom: 1px solid var(--line);
+  background:
+    radial-gradient(180px 100px at 100% 0, var(--tint, rgba(47, 107, 255, 0.08)), transparent 70%),
+    var(--paper-3);
+}
+
+.detail-topline {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 11px;
+}
+
+.detail-kicker {
+  flex: 1;
+  overflow: hidden;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.5px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.icon-btn {
+  display: grid;
+  place-items: center;
+  width: 29px;
+  height: 29px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.62);
+  cursor: pointer;
+}
+
+.icon-btn:hover {
+  color: var(--ink);
+  background: #fff;
+}
+
+.detail-titlerow {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.detail-icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 38px;
+  height: 38px;
+  margin-top: 1px;
+  border-radius: 11px;
+  color: var(--c, var(--blue));
+  background: var(--tint, #eaf0ff);
+}
+
+.detail h2 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.3;
+  letter-spacing: 0.2px;
+}
+
+.detail-sub {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.detail-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 18px 20px 26px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(20, 33, 61, 0.18) transparent;
+}
+
+.detail-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.detail-body::-webkit-scrollbar-thumb {
+  border: 2px solid var(--paper-3);
+  border-radius: 8px;
+  background: rgba(20, 33, 61, 0.16);
+}
+
+.summary {
+  margin: 0 0 16px;
+  color: #35425a;
+  font-size: 12.5px;
+  line-height: 1.9;
+}
+
+.detail-section {
+  margin-top: 18px;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0 0 9px;
+  color: var(--muted);
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+
+.section-title::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 8px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  color: #4a576c;
+  background: rgba(247, 244, 236, 0.7);
+  font-size: 10px;
+  line-height: 1.3;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.chip:hover {
+  border-color: color-mix(in srgb, var(--c, var(--blue)) 35%, white);
+  color: var(--ink);
+  background: #fff;
+}
+
+.chip::before {
+  content: "";
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--c, var(--blue));
+  opacity: 0.7;
+}
+
+/* 代码块 */
+.code-card {
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 13px;
+  background: #0d1a2c;
+  box-shadow: 0 12px 28px rgba(13, 26, 44, 0.2);
+}
+
+.code-head {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  height: 35px;
+  padding: 0 11px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.code-dots {
+  display: flex;
+  gap: 4px;
+}
+
+.code-dots i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ff6b6b;
+}
+
+.code-dots i:nth-child(2) { background: #ffc93c; }
+.code-dots i:nth-child(3) { background: #52c41a; }
+
+.code-name {
+  flex: 1;
+  overflow: hidden;
+  color: rgba(230, 237, 247, 0.45);
+  font-family: var(--mono);
+  font-size: 9px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 23px;
+  padding: 0 7px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: rgba(230, 237, 247, 0.62);
+  background: transparent;
+  font-size: 9px;
+  cursor: pointer;
+}
+
+.copy-btn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.code-card pre {
+  max-height: 360px;
+  margin: 0;
+  overflow: auto;
+  padding: 14px 15px 16px;
+  color: #f2f7ff;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.8;
+  tab-size: 4;
+  scrollbar-width: thin;
+}
+
+.code-card code {
+  font-family: inherit;
+}
+
+.tok-key { color: #ff7ab2; font-weight: 600; }
+.tok-str { color: #a5e1a0; }
+.tok-com { color: #8da2bd; font-style: italic; }
+.tok-num { color: #ffc93c; }
+.tok-fn { color: #d2a8ff; }
+.tok-builtin { color: #79c0ff; }
+.tok-self { color: #ffa657; font-style: italic; }
+
+.output-card {
+  overflow: hidden;
+  border: 1px dashed rgba(20, 33, 61, 0.18);
+  border-radius: 11px;
+  background: #f2eee3;
+}
+
+.output-head {
+  padding: 6px 11px;
+  border-bottom: 1px dashed rgba(20, 33, 61, 0.13);
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 8.5px;
+  letter-spacing: 0.8px;
+}
+
+.output-card pre {
+  max-height: 190px;
+  margin: 0;
+  overflow: auto;
+  padding: 10px 12px 12px;
+  color: #33415a;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  line-height: 1.68;
+  white-space: pre-wrap;
+}
+
+.tip {
+  display: flex;
+  gap: 9px;
+  padding: 11px 12px;
+  border: 1px solid rgba(232, 163, 23, 0.26);
+  border-radius: 11px;
+  background:
+    linear-gradient(135deg, rgba(255, 201, 60, 0.13), rgba(255, 253, 248, 0.4));
+}
+
+.tip-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 19px;
+  height: 19px;
+  margin-top: 1px;
+  border-radius: 6px;
+  color: #8a5a00;
+  background: rgba(255, 201, 60, 0.45);
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.tip p {
+  margin: 0;
+  color: #65512d;
+  font-size: 10.5px;
+  line-height: 1.72;
+}
+
+.tip b {
+  color: #4d3a17;
+}
+
+.detail-foot {
+  flex: none;
+  display: flex;
+  gap: 8px;
+  padding: 12px 20px;
+  border-top: 1px solid var(--line);
+  background: rgba(255, 253, 248, 0.9);
+  backdrop-filter: blur(10px);
+}
+
+.detail-foot .btn {
+  flex: 1;
+  height: 38px;
+  font-size: 11px;
+}
+
+.master-btn.done {
+  border-color: rgba(14, 159, 138, 0.28);
+  color: #087f6d;
+  background: rgba(14, 159, 138, 0.09);
+}
+
+/* 分支详情 */
+.branch-hero {
+  position: relative;
+  overflow: hidden;
+  min-height: 108px;
+  padding: 16px;
+  margin-bottom: 16px;
+  border: 1px solid color-mix(in srgb, var(--c) 20%, white);
+  border-radius: 15px;
+  background:
+    radial-gradient(180px 110px at 100% 0, color-mix(in srgb, var(--c) 17%, transparent), transparent 72%),
+    var(--tint);
+}
+
+.branch-hero .big-num {
+  position: absolute;
+  right: 8px;
+  top: 0;
+  color: color-mix(in srgb, var(--c) 26%, white);
+  font-family: var(--mono);
+  font-size: 62px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -4px;
+}
+
+.branch-hero .hero-kicker {
+  position: relative;
+  margin: 1px 0 18px;
+  color: color-mix(in srgb, var(--c) 62%, #6b7688);
+  font-family: var(--mono);
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+}
+
+.branch-hero h3 {
+  position: relative;
+  margin: 4px 0 3px;
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.branch-hero p {
+  position: relative;
+  margin: 0;
+  color: var(--muted);
+  font-size: 10.5px;
+  line-height: 1.6;
+}
+
+.branch-stats {
+  position: relative;
+  display: flex;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.branch-stats b {
+  display: block;
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 16px;
+}
+
+.branch-stats span {
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.topic-card {
+  display: block;
+  width: 100%;
+  padding: 10px 11px;
+  margin-bottom: 7px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.45);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, transform 0.15s;
+}
+
+.topic-card:hover {
+  border-color: color-mix(in srgb, var(--c) 32%, white);
+  background: #fff;
+  transform: translateX(2px);
+}
+
+.topic-card h4 {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0 0 3px;
+  color: var(--ink-2);
+  font-size: 11.5px;
+  font-weight: 800;
+}
+
+.topic-card h4 i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--c);
+}
+
+.topic-card p {
+  margin: 0;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 9.5px;
+  line-height: 1.55;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* ---------------- 模态框 ---------------- */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: none;
+  place-items: center;
+  padding: 28px;
+}
+
+.modal.open {
+  display: grid;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 18, 34, 0.45);
+  backdrop-filter: blur(6px);
+  animation: fadeIn 0.2s ease;
+}
+
+.modal-card {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  width: min(940px, 94vw);
+  max-height: 88vh;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 20px;
+  background: var(--paper-3);
+  box-shadow: var(--shadow-lg);
+  animation: modalIn 0.3s var(--ease);
+}
+
+.modal-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 22px 24px 16px;
+  border-bottom: 1px solid var(--line);
+  background:
+    radial-gradient(220px 120px at 100% 0, rgba(255, 201, 60, 0.14), transparent 70%),
+    var(--paper-3);
+}
+
+.modal-head h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+}
+
+.modal-head p {
+  margin: 5px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.modal-head .icon-btn {
+  margin-left: auto;
+}
+
+.modal-body {
+  overflow-y: auto;
+  padding: 20px 24px 26px;
+}
+
+.route-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.route-card {
+  position: relative;
+  overflow: hidden;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.route-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--c);
+}
+
+.route-week {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--c);
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.route-week span {
+  color: var(--muted-2);
+  font-family: var(--sans);
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.route-card h3 {
+  margin: 5px 0 4px;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.route-card p {
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.65;
+}
+
+.route-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.route-tags i {
+  padding: 3px 6px;
+  border-radius: 5px;
+  color: var(--muted);
+  background: rgba(20, 33, 61, 0.05);
+  font-size: 8.5px;
+  font-style: normal;
+}
+
+.route-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  margin-top: 9px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--line);
+  color: #5d4a24;
+  font-size: 9.5px;
+  line-height: 1.55;
+}
+
+.route-check b {
+  color: #a06b00;
+}
+
+.speed-strip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+  padding: 11px 13px;
+  border: 1px dashed rgba(47, 107, 255, 0.22);
+  border-radius: 11px;
+  background: rgba(47, 107, 255, 0.045);
+}
+
+.speed-strip b {
+  flex: none;
+  color: var(--blue);
+  font-size: 10px;
+}
+
+.speed-strip p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 9.5px;
+  line-height: 1.55;
+}
+
+.cover-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.cover-col h3 {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0 0 10px;
+  font-size: 12px;
+}
+
+.cover-col h3 span {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  color: #fff;
+  background: var(--navy);
+  font-family: var(--mono);
+  font-size: 8px;
+}
+
+.cover-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 10px;
+}
+
+.cover-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+  color: #4c5a70;
+  font-size: 10.5px;
+  line-height: 1.55;
+}
+
+.cover-item::before {
+  content: "✓";
+  flex: none;
+  color: #0e9f8a;
+  font-size: 8px;
+  font-weight: 900;
+}
+
+.cover-note {
+  margin-top: 14px;
+  padding: 10px 12px;
+  border-radius: 9px;
+  color: var(--muted);
+  background: rgba(20, 33, 61, 0.04);
+  font-size: 9.5px;
+  line-height: 1.6;
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  color: #fff;
+  background: rgba(11, 27, 51, 0.94);
+  box-shadow: var(--shadow-lg);
+  font-size: 11px;
+  transform: translate(-50%, 16px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s, transform 0.25s;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.toast i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--yellow);
+}
+
+/* 动画 */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes nodeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes dropIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(14px) scale(0.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* 窄屏 */
+@media (max-width: 1120px) {
+  .brand {
+    min-width: 0;
+  }
+
+  .brand p {
+    display: none;
+  }
+
+  .top-actions .btn-label {
+    display: none;
+  }
+
+  .top-actions .btn {
+    width: 36px;
+    padding: 0;
+  }
+}
+
+@media (max-width: 1024px) {
+  .topbar {
+    gap: 10px;
+    height: 64px;
+    padding: 0 12px;
+  }
+
+  .brand {
+    flex: none;
+    min-width: 0;
+  }
+
+  .logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    font-size: 17px;
+  }
+
+  .brand h1,
+  .brand p,
+  .search-key,
+  .top-actions {
+    display: none;
+  }
+
+  .search-wrap {
+    max-width: none;
+  }
+
+  .search-box {
+    height: 40px;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .world,
+  .map-controls,
+  .map-hint {
+    display: none;
+  }
+
+  .mobile-list {
+    position: absolute;
+    inset: 0;
+    display: block;
+    overflow-y: auto;
+    padding: 16px 14px 90px;
+    background:
+      radial-gradient(500px 380px at 50% 0, rgba(47, 107, 255, 0.055), transparent 70%),
+      transparent;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .detail {
+    top: auto;
+    left: 0;
+    width: 100%;
+    max-width: none;
+    height: 72vh;
+    border-top: 1px solid var(--line);
+    border-left: 0;
+    border-radius: 20px 20px 0 0;
+    transform: translateY(103%);
+    box-shadow: 0 -20px 60px rgba(20, 33, 61, 0.2);
+  }
+
+  .detail.open {
+    transform: translateY(0);
+  }
+
+  .detail h2 {
+    font-size: 18px;
+  }
+
+  .code-card pre {
+    font-size: 11px;
+    max-height: 260px;
+  }
+
+  .route-grid,
+  .cover-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cover-list {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .modal {
+    padding: 10px;
+  }
+
+  .modal-head,
+  .modal-body {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+/* 滚动条 */
+.sidebar::-webkit-scrollbar,
+.search-results::-webkit-scrollbar,
+.modal-body::-webkit-scrollbar,
+.code-card pre::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+.sidebar::-webkit-scrollbar-thumb,
+.search-results::-webkit-scrollbar-thumb,
+.modal-body::-webkit-scrollbar-thumb,
+.code-card pre::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background: rgba(20, 33, 61, 0.14);
+}
+
+</style>
+</head>
+<body>
+<div id="app">
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">Py</div>
+      <div>
+        <h1>Python 3 全景知识地图</h1>
+        <p>基于菜鸟教程 · 13 大模块 · 383 个知识点</p>
+      </div>
+    </div>
+
+    <div class="search-wrap">
+      <div class="search-box">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <circle cx="11" cy="11" r="7"></circle>
+          <path d="m20 20-3.2-3.2"></path>
+        </svg>
+        <input id="searchInput" type="search" autocomplete="off" spellcheck="false"
+               placeholder="搜索知识点，如：切片 / 装饰器 / GIL / 虚拟环境">
+        <span class="search-key">Ctrl K</span>
+      </div>
+      <div class="search-results" id="searchResults"></div>
+    </div>
+
+    <div class="top-actions">
+      <button class="btn" id="overviewBtn" title="只看 13 个一级模块">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+          <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+          <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+          <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+        </svg>
+        <span class="btn-label">总览</span>
+      </button>
+      <button class="btn" id="expandBtn" title="展开所有知识点">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"></path>
+        </svg>
+        <span class="btn-label">全展开</span>
+      </button>
+      <button class="btn btn-primary" id="routeBtn">
+        <span class="dot"></span>
+        <span class="btn-label">学习路线</span>
+      </button>
+      <a class="btn btn-icon" id="posterLink" href="python3-mindmap-poster.png" download title="下载高清海报">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M12 3v12"></path>
+          <path d="m7 10 5 5 5-5"></path>
+          <path d="M5 21h14"></path>
+        </svg>
+      </a>
+      <div class="progress-pill" title="已掌握知识点">
+        <div class="ring" id="progressRing"></div>
+        <span id="progressText">0%</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="side-label">
+        <span>学习模块</span>
+        <b>13</b>
+      </div>
+      <nav id="sideNav"></nav>
+
+      <div class="side-route">
+        <h3>4 周掌握路线</h3>
+        <p>从语法地基到项目实战，按顺序推进，每周一个里程碑。</p>
+        <div class="mini-steps"><i></i><i></i><i></i><i></i></div>
+        <button class="btn" id="sideRouteBtn">查看学习路线</button>
+      </div>
+
+      <div class="side-foot">
+        覆盖菜鸟教程 Python3 全部 82 章<br>
+        <a href="#" id="coverageBtn" style="color:#2f6bff;text-decoration:none;">查看覆盖清单 →</a>
+        &nbsp;·&nbsp;
+        <a href="python3-mindmap-poster.pdf" target="_blank" style="color:#2f6bff;text-decoration:none;">A0 打印版</a>
+      </div>
+    </aside>
+
+    <main class="stage" id="stage">
+      <div class="world" id="world">
+        <div class="deco" style="left:-1080px;top:-520px;font-size:52px;">&gt;&gt;&gt;</div>
+        <div class="deco" style="left:880px;top:-640px;font-size:46px;">{ }</div>
+        <div class="deco" style="left:-960px;top:610px;font-size:44px;">[ ]</div>
+        <div class="deco" style="left:1010px;top:620px;font-size:40px;">def</div>
+        <div class="deco" style="left:-520px;top:760px;font-size:38px;">λ</div>
+        <div class="deco" style="left:620px;top:-780px;font-size:38px;">#</div>
+
+        <svg id="links" aria-hidden="true"></svg>
+
+        <div class="root" id="rootNode" role="button" tabindex="0" aria-label="Python 3 全景知识地图">
+          <div class="root-glow"></div>
+          <div class="root-ring"></div>
+          <div class="root-core">
+            <div class="root-py">Py</div>
+            <div class="root-title">Python 3</div>
+            <div class="root-sub">全景知识地图</div>
+          </div>
+        </div>
+
+        <div id="nodes"></div>
+      </div>
+
+      <div class="map-hint" id="mapHint">
+        <b>拖拽</b> 平移 · <b>滚轮</b> 缩放 · <b>点击</b> 节点看示例
+      </div>
+
+      <div class="mobile-list" id="mobileList"></div>
+
+      <div class="map-controls">
+        <button id="zoomInBtn" title="放大">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M12 5v14M5 12h14"></path>
+          </svg>
+        </button>
+        <button id="zoomOutBtn" title="缩小">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M5 12h14"></path>
+          </svg>
+        </button>
+        <div class="divider"></div>
+        <button id="fitBtn" title="适应画布">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"></path>
+          </svg>
+        </button>
+        <button id="centerBtn" title="回到中心">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M12 2v3M12 19v3M2 12h3M19 12h3"></path>
+          </svg>
+        </button>
+        <div class="zoom-label" id="zoomLabel">100%</div>
+      </div>
+
+      <aside class="detail" id="detail" aria-hidden="true">
+        <div class="detail-head" id="detailHead"></div>
+        <div class="detail-body" id="detailBody"></div>
+        <div class="detail-foot" id="detailFoot"></div>
+      </aside>
+    </main>
+  </div>
+</div>
+
+<!-- 学习路线 -->
+<div class="modal" id="routeModal">
+  <div class="modal-backdrop" data-close="routeModal"></div>
+  <div class="modal-card">
+    <div class="modal-head">
+      <div>
+        <h2>从 0 到 1 的学习路线</h2>
+        <p>按“语法 → 数据结构 → 函数/类 → 标准库 → 项目”推进。每阶段都有可交付的小作品，避免只学不练。</p>
+      </div>
+      <button class="icon-btn" data-close="routeModal" aria-label="关闭">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M18 6 6 18M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="route-grid">
+        <article class="route-card" style="--c:#2f6bff">
+          <div class="route-week">WEEK 01 <span>语法地基</span></div>
+          <h3>能写出“会判断、会循环”的脚本</h3>
+          <p>模块 01–04：环境、变量与类型、输入输出、条件循环、字符串/列表/字典/集合。</p>
+          <div class="route-tags"><i>Hello World</i><i>九九乘法表</i><i>猜数字</i><i>单词统计</i></div>
+          <div class="route-check"><b>通关：</b>不查资料写出 1–100 求和、去重、词频统计。</div>
+        </article>
+        <article class="route-card" style="--c:#be123c">
+          <div class="route-week">WEEK 02 <span>函数与对象</span></div>
+          <h3>学会封装、复用与处理错误</h3>
+          <p>模块 05–07：函数参数、作用域、lambda、递归、装饰器、类与继承、异常处理。</p>
+          <div class="route-tags"><i>计算器</i><i>通讯录</i><i>银行账户</i><i>自定义异常</i></div>
+          <div class="route-check"><b>通关：</b>用类实现一个带余额校验的账户系统，并写 3 个测试。</div>
+        </article>
+        <article class="route-card" style="--c:#15803d">
+          <div class="route-week">WEEK 03 <span>工程能力</span></div>
+          <h3>能读写数据、拆模块、写测试</h3>
+          <p>模块 08–10：文件与路径、CSV/JSON、with、迭代器/生成器、模块包、venv、PEP 8、单元测试。</p>
+          <div class="route-tags"><i>JSON 通讯录</i><i>日志分析</i><i>pip 依赖</i><i>pytest</i></div>
+          <div class="route-check"><b>通关：</b>把通讯录拆成 3 个模块，数据持久化到 JSON，并有测试覆盖。</div>
+        </article>
+        <article class="route-card" style="--c:#ca8a04">
+          <div class="route-week">WEEK 04 <span>实战进阶</span></div>
+          <h3>能选对库，完成一个完整项目</h3>
+          <p>模块 11–13：正则、日期、标准库、并发、requests、数据库、爬虫/Web/数据分析/AI。</p>
+          <div class="route-tags"><i>天气查询</i><i>Flask API</i><i>网页爬虫</i><i>数据分析报告</i></div>
+          <div class="route-check"><b>通关：</b>独立完成一个“有输入、有处理、有输出、有 README”的项目。</div>
+        </article>
+      </div>
+      <div class="speed-strip">
+        <b>7 天速览</b>
+        <p>Day1 语法 · Day2 数据结构 · Day3 函数 · Day4 类与异常 · Day5 文件与标准库 · Day6 并发与网络 · Day7 项目实战</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 覆盖清单 -->
+<div class="modal" id="coverageModal">
+  <div class="modal-backdrop" data-close="coverageModal"></div>
+  <div class="modal-card">
+    <div class="modal-head">
+      <div>
+        <h2>菜鸟教程 Python3 · 覆盖清单</h2>
+        <p>基础教程 40 章 + 高级教程 42 章，全部映射到本图的 13 大模块。标注 ✓ 的章节都能在图中找到对应知识点与示例。</p>
+      </div>
+      <button class="icon-btn" data-close="coverageModal" aria-label="关闭">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M18 6 6 18M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="cover-grid" id="coverGrid"></div>
+      <div class="cover-note">
+        说明：CGI、uWSGI 等历史/部署章节以“了解即可”呈现；OpenAI、PyQt、Scrapy、量化等生态章节放在「13 实战生态」中，避免主图被工具细节淹没。核心语法、数据结构、函数、面向对象、异常、文件、标准库、并发与网络均有独立主题和可运行示例。
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><i></i><span id="toastText"></span></div>
+
+<script>
+window.addEventListener("error", (e) => console.log("STACK", e.error && e.error.stack ? e.error.stack : e.message));
+window.__DATA__ = {"branches":[{"id":"start","num":"01","title":"入门准备","subtitle":"装好环境，写下第一行代码","icon":"rocket","color":"#2F6BFF","tint":"#EAF0FF","topics":[{"id":"what","title":"认识 Python","summary":"Python 是一门解释型、动态类型、跨平台的通用语言。语法接近自然语言，生态覆盖 Web、数据分析、人工智能、自动化与爬虫，因此常被称为“胶水语言”和“AI 时代的第一语言”。","code":"import sys\nprint(\"当前版本：\", sys.version.split()[0])\nprint(\"设计哲学：简洁、可读、实用\")","output":"当前版本：3.14.0\n设计哲学：简洁、可读、实用","tip":"新项目一律使用 Python 3。Python 2 已于 2020 年停止维护，不要再看 Python 2 的旧写法。","leaves":[{"title":"解释型 & 动态类型","desc":"无需编译，变量不用提前声明类型"},{"title":"跨平台 & 生态","desc":"Windows / macOS / Linux 同一套代码"},{"title":"Python 2 vs 3","desc":"print 函数、字符串、整数除法等差异"},{"title":"设计哲学","desc":"import this 查看 Python 之禅"}],"lang":"python"},{"id":"install","title":"安装与运行","summary":"从 python.org 下载安装包，Windows 安装时务必勾选 “Add python.exe to PATH”。安装后在终端验证版本，既可以用交互式 REPL 逐行试验，也可以运行 .py 脚本。","code":"# 在终端（不是 Python 里）执行：\npython --version\npython hello.py\n\n# 进入交互模式：\npython\n# >>> print(\"Hello\")","output":"Python 3.14.0\nHello, Python!","tip":"如果提示“不是内部或外部命令”，说明 PATH 没配好；重新安装并勾选 Add to PATH，或使用 py 启动器。","leaves":[{"title":"Windows / macOS / Linux","desc":"安装包、包管理器与 PATH"},{"title":"验证版本","desc":"python --version / py --version"},{"title":"REPL 交互模式","desc":">>> 提示符，适合快速试验"},{"title":"运行 .py 脚本","desc":"python 文件名.py"}],"lang":"bash"},{"id":"ide","title":"开发工具","summary":"写 Python 不挑工具：IDLE 自带、PyCharm 功能完整、VS Code 轻量且插件生态好、Jupyter 适合数据分析。新手建议先用 VS Code 或 PyCharm，重点学会选择解释器、运行与调试。","code":"# VS Code：安装 Python 扩展 -> 选择解释器 -> F5 运行\nname = \"小明\"\nprint(f\"{name}，欢迎学习 Python！\")","output":"小明，欢迎学习 Python！","tip":"一个项目最好对应一个虚拟环境。右下角解释器选错，是“模块明明装了却导入失败”的最常见原因。","leaves":[{"title":"IDLE","desc":"Python 自带，零配置入门"},{"title":"PyCharm","desc":"专业 IDE，重构与调试强大"},{"title":"VS Code + Python 插件","desc":"轻量、免费、扩展丰富"},{"title":"Jupyter Notebook","desc":"单元格运行，适合数据探索"}],"lang":"python"},{"id":"first","title":"第一个程序","summary":"从 print 开始：字符串要加引号，注释用 #，代码块用 4 个空格缩进。把代码保存为 hello.py，在终端执行 python hello.py，你就完成了第一个程序。","code":"# 我的第一个 Python 程序\nprint(\"Hello, World!\")\nprint(\"你好，Python！\")","output":"Hello, World!\n你好，Python！","tip":"缩进是语法的一部分。同一代码块必须使用相同缩进，推荐统一 4 个空格，不要 Tab 和空格混用。","leaves":[{"title":"print() 输出","desc":"把内容打印到终端"},{"title":"注释 #","desc":"解释代码，不参与执行"},{"title":"4 空格缩进","desc":"表示代码块层级"},{"title":".py 文件","desc":"Python 源文件的标准扩展名"}],"lang":"python"},{"id":"venv","title":"虚拟环境与 pip","summary":"虚拟环境让每个项目拥有独立的依赖，互不打架。用 python -m venv .venv 创建，激活后用 pip 安装包，最后把依赖冻结到 requirements.txt，别人就能一键复现。","code":"# 终端命令（Windows）\npython -m venv .venv\n.venv\\Scripts\\activate\npython -m pip install --upgrade pip\npip install requests\npip freeze > requirements.txt\n\n# macOS / Linux 激活：\n# source .venv/bin/activate","output":"Successfully installed requests ...","tip":"不要提交 .venv 到 Git；用 python -m pip 而不是裸 pip，能确保装进当前解释器。","leaves":[{"title":"创建虚拟环境","desc":"python -m venv .venv"},{"title":"激活与退出","desc":"activate / deactivate"},{"title":"pip 安装/卸载","desc":"install / uninstall / list"},{"title":"requirements.txt","desc":"锁定依赖版本，方便复现"}],"lang":"bash"},{"id":"roadmap","title":"学习路线","summary":"先语法、再数据结构与函数、然后面向对象和标准库，最后用项目把知识串起来。每学一个点至少写 3 个小例子；遇到报错先读最后一行，再最小化复现。","code":"plan = [\"语法基础\", \"数据结构\", \"函数与类\", \"标准库\", \"项目实战\"]\nfor day, skill in enumerate(plan, 1):\n    print(f\"第 {day} 阶段：{skill}\")","output":"第 1 阶段：语法基础\n第 2 阶段：数据结构\n第 3 阶段：函数与类\n第 4 阶段：标准库\n第 5 阶段：项目实战","tip":"不要陷入“收藏=学会”。看一遍、敲一遍、改一遍、讲一遍，才算真正掌握。","leaves":[{"title":"四阶段路线","desc":"基础 -> 进阶 -> 工程 -> 实战"},{"title":"项目驱动","desc":"用输出倒逼输入"},{"title":"查文档与报错","desc":"官方文档 + Traceback"},{"title":"避免死记硬背","desc":"理解场景，记住常用 20%"}],"lang":"python"}]},{"id":"syntax","num":"02","title":"语法基石","subtitle":"变量、类型、运算与输入输出","icon":"code","color":"#0E9F8A","tint":"#E6F7F4","topics":[{"id":"basics","title":"基础语法","summary":"Python 用缩进表示代码块，大小写敏感，语句通常一行一条。括号内可以自然换行，行尾反斜杠也能续行。标识符由字母、数字、下划线组成，不能以数字开头。","code":"total = (1 + 2 +\n         3 + 4)          # 括号内可换行\nif total > 5:\n    print(\"大于 5\")      # 缩进 4 个空格","output":"大于 5","tip":"缩进错误会直接报 IndentationError；if / for / def / class 后面的冒号不能漏。","leaves":[{"title":"缩进规则","desc":"同一代码块缩进必须一致"},{"title":"大小写敏感","desc":"Name 和 name 是两个变量"},{"title":"续行与括号","desc":"括号内换行最推荐"},{"title":"标识符与关键字","desc":"不能以数字开头，避开关键字"}],"lang":"python"},{"id":"variable","title":"变量与常量","summary":"变量是指向对象的名称，Python 采用动态类型：同一个名字可以先后指向整数、字符串。赋值用 =，可以链式赋值、解包赋值；del 只删除名字，不一定立即释放对象。","code":"age = 18\nage = \"十八\"        # 动态类型：可重新绑定\nx = y = z = 0       # 链式赋值\na, b = 1, 2         # 解包赋值\nprint(age, x, a, b)\ndel a               # 删除变量名","output":"十八 0 1 2","tip":"变量名区分大小写；不要用 list、dict、str、sum 等内置名做变量名，会把内置函数覆盖掉。","leaves":[{"title":"动态类型","desc":"变量存引用，对象才有类型"},{"title":"命名规范","desc":"snake_case，见名知意"},{"title":"链式/解包赋值","desc":"x = y = 0；a, b = 1, 2"},{"title":"del 与垃圾回收","desc":"引用计数 + 分代回收"}],"lang":"python"},{"id":"comment","title":"注释与文档","summary":"# 是真正的单行注释；三引号本质是多行字符串，只有放在模块、函数、类的第一行时才成为 docstring。docstring 可以用 help() 或 __doc__ 查看。","code":"# 单行注释\n\n\"\"\"\n这是多行字符串，\n通常用作模块说明。\n\"\"\"\n\ndef greet(name):\n    \"\"\"返回一句问候。\"\"\"\n    return f\"你好，{name}\"\n\nprint(greet.__doc__)","output":"返回一句问候。","tip":"三引号不是“多行注释”的语法，只是常被这样使用；函数文档要写在 def 的下一行。","leaves":[{"title":"单行注释","desc":"# 后面的内容不执行"},{"title":"多行字符串","desc":"三引号包裹，可跨行"},{"title":"docstring","desc":"模块/函数/类的说明"},{"title":"help()","desc":"查看文档与签名"}],"lang":"python"},{"id":"io","title":"输入与输出","summary":"print 负责输出，sep 控制分隔符、end 控制结尾；input 负责输入，但永远返回字符串。格式化推荐 f-string，可读性最好；format 与 % 也常见于老代码。","code":"name = input(\"请输入名字：\")\nage = int(input(\"请输入年龄：\"))\nprint(f\"你好，{name}！\")\nprint(f\"明年你 {age + 1} 岁。\")\nprint(\"A\", \"B\", sep=\"-\", end=\"!\\n\")","output":"请输入名字：小明\n请输入年龄：18\n你好，小明！\n明年你 19 岁。\nA-B!","tip":"input() 拿到的是字符串，做数学运算前要 int()/float() 转换，否则会 TypeError 或字符串拼接。","leaves":[{"title":"print 参数","desc":"sep / end / file"},{"title":"input 输入","desc":"返回 str，需要类型转换"},{"title":"f-string","desc":"f\"{变量}\"，最推荐"},{"title":"格式化三兄弟","desc":"f-string / format / %"}],"lang":"python"},{"id":"types","title":"基本数据类型","summary":"内置类型包括数字（int、float、complex、bool）、字符串、None，以及 list、tuple、dict、set 等容器。type() 看类型，isinstance() 判断兼容性；bool 是 int 的子类。","code":"n = 42\npi = 3.14\nok = True\nname = \"Python\"\nnothing = None\nprint(type(n), type(pi), type(ok), type(name), type(nothing))\nprint(isinstance(ok, int))   # True：bool 是 int 的子类","output":"<class 'int'> <class 'float'> <class 'bool'> <class 'str'> <class 'NoneType'>\nTrue","tip":"list / dict / set 可变，str / tuple 不可变；不可变对象更安全，也可作为字典的键。","leaves":[{"title":"int / float / complex","desc":"任意精度整数，IEEE754 浮点"},{"title":"bool 与 None","desc":"True/False；None 表示空值"},{"title":"str 不可变","desc":"Unicode 字符串，方法返回新串"},{"title":"可变 vs 不可变","desc":"影响赋值、传参和哈希"}],"lang":"python"},{"id":"convert","title":"数据类型转换","summary":"用 int()、float()、str()、bool() 做显式转换，用 list()、tuple()、set()、dict() 转换容器。int + float 会自动升格为 float；转换失败会抛 ValueError。","code":"print(int(\"42\"), float(\"3.14\"), str(100), bool(\"\"))\nprint(list(\"abc\"), tuple([1, 2]), set([1, 2, 2]))\nprint(int(3.9))        # 3：截断，不是四舍五入\nprint(1 + 2.5)         # 隐式转换为 float","output":"42 3.14 100 False\n['a', 'b', 'c'] (1, 2) {1, 2}\n3\n3.5","tip":"int(\"3.14\") 会报错，要先 float 再 int；bool(\"False\") 是 True，因为非空字符串为真。","leaves":[{"title":"数值转换","desc":"int / float / complex"},{"title":"容器转换","desc":"list / tuple / set / dict"},{"title":"隐式转换","desc":"int 与 float 混合运算"},{"title":"常见陷阱","desc":"int 截断、bool 真值、浮点误差"}],"lang":"python"},{"id":"operators","title":"运算符","summary":"算术、比较、逻辑、赋值、位、成员、身份七类运算符要分清。`/` 永远得到 float，`//` 是向下取整；and/or 短路并返回操作数；is 比较身份，== 比较值。","code":"print(7 / 2, 7 // 2, 7 % 2, 2 ** 3)\nprint(1 < 2 < 3)          # 链式比较\nprint(0 or \"默认值\")       # 短路，返回操作数\nprint(\"py\" in \"python\", 3 is not None)","output":"3.5 3 1 8\nTrue\n默认值\nTrue True","tip":"不要用 is 比较数字/字符串的值；小整数缓存会让 is 偶尔“碰巧为 True”，这是坑不是特性。","leaves":[{"title":"算术运算符","desc":"+ - * / // % **"},{"title":"比较/逻辑","desc":"== != < > and or not"},{"title":"赋值/海象","desc":"= += -= := (3.8+)"},{"title":"位/成员/身份","desc":"& | ^ ~ << >> / in / is"}],"lang":"python"},{"id":"typing","title":"类型注解","summary":"注解用来描述变量和函数的类型，提升可读性并让 IDE/静态检查器发现错误。它不会在运行时强制校验；容器泛型用 list[int]、dict[str, int]，可空类型用 int | None。","code":"def average(nums: list[float]) -> float:\n    return sum(nums) / len(nums)\n\nname: str = \"小明\"\nscores: dict[str, int] = {\"语文\": 90}\nmaybe: int | None = None\nprint(average([80, 90, 100]), name, scores, maybe)","output":"90.0 小明 {'语文': 90} None","tip":"注解不是强制类型，运行时传错类型照样能跑；要真正检查需 mypy / pyright。","leaves":[{"title":"变量注解","desc":"name: str = \"小明\""},{"title":"函数注解","desc":"参数: 类型 -> 返回类型"},{"title":"容器泛型","desc":"list[int] / dict[str, int]"},{"title":"Optional / Union","desc":"int | None，3.10+ 更简洁"}],"lang":"python"}]},{"id":"flow","num":"03","title":"流程控制","subtitle":"让程序学会判断、重复与选择","icon":"branch","color":"#E4572E","tint":"#FDEEE9","topics":[{"id":"if","title":"条件分支","summary":"if / elif / else 按顺序判断，命中一个分支后其余跳过。条件表达式会自动做真值测试：0、空字符串、空容器、None、False 都为假。简单的二选一可用三元表达式。","code":"score = 86\nif score >= 90:\n    level = \"优秀\"\nelif score >= 60:\n    level = \"及格\"\nelse:\n    level = \"不及格\"\nprint(level)\nprint(\"及格\" if score >= 60 else \"不及格\")","output":"及格\n及格","tip":"条件里不要写 if x == True；空列表/0/None 直接判断即可。elif 可以有很多个，else 最多一个。","leaves":[{"title":"if / elif / else","desc":"从上到下，命中即止"},{"title":"真值测试","desc":"0 / '' / [] / {} / None 为假"},{"title":"三元表达式","desc":"a if cond else b"},{"title":"嵌套条件","desc":"可读性差时尽早 return"}],"lang":"python"},{"id":"while","title":"while 循环","summary":"while 在条件为真时反复执行，适合“次数未知、满足条件就继续”的场景。循环体里必须改变条件，否则会死循环。while 也可以带 else：条件正常变假时执行。","code":"count = 3\nwhile count > 0:\n    print(\"倒计时\", count)\n    count -= 1\nelse:\n    print(\"发射！\")","output":"倒计时 3\n倒计时 2\n倒计时 1\n发射！","tip":"死循环时按 Ctrl+C 中断；用 while True + break 写“至少执行一次”的循环也很常见。","leaves":[{"title":"条件循环","desc":"条件为真就继续"},{"title":"计数器模式","desc":"初始化、判断、更新三件事"},{"title":"while / else","desc":"非 break 结束时执行"},{"title":"死循环与中断","desc":"Ctrl+C，检查条件更新"}],"lang":"python"},{"id":"for","title":"for 循环","summary":"for 直接遍历可迭代对象，不需要手写索引。range 生成数字序列，enumerate 同时拿索引，zip 并行遍历多个序列，items 遍历字典键值对。","code":"fruits = [\"苹果\", \"香蕉\", \"橙子\"]\nfor i, fruit in enumerate(fruits, 1):\n    print(i, fruit)\n\nfor name, score in {\"语文\": 90, \"数学\": 95}.items():\n    print(name, score)\n\nfor x, y in zip([1, 2], [\"a\", \"b\"]):\n    print(x, y)","output":"1 苹果\n2 香蕉\n3 橙子\n语文 90\n数学 95\n1 a\n2 b","tip":"不要边遍历列表边删除元素；需要修改时遍历副本 for x in nums[:]，或新建结果列表。","leaves":[{"title":"遍历可迭代对象","desc":"字符串、列表、字典、文件都可"},{"title":"range","desc":"range(start, stop, step)"},{"title":"enumerate / zip","desc":"同时取索引 / 并行遍历"},{"title":"字典遍历","desc":"keys / values / items"}],"lang":"python"},{"id":"jump","title":"跳转控制","summary":"break 立即结束当前循环，continue 跳过本次进入下一次，pass 是占位语句什么都不做。嵌套循环中 break 只跳出最内层，必要时用标志变量或函数 return。","code":"for n in range(2, 10):\n    if n % 2 == 0:\n        continue        # 跳过偶数\n    if n > 7:\n        break           # 提前结束\n    print(n)","output":"3\n5\n7","tip":"break 不会跳出外层循环；如果发现自己写了三层循环 + 多个 break，通常该抽成函数了。","leaves":[{"title":"break","desc":"立即结束当前循环"},{"title":"continue","desc":"跳过本次，进入下一次"},{"title":"pass","desc":"占位，保持语法完整"},{"title":"嵌套循环","desc":"break 只影响当前层"}],"lang":"python"},{"id":"match","title":"模式匹配 match","summary":"Python 3.10+ 的 match/case 做的是结构匹配，不是简单的 switch。可以匹配字面量、序列、字典、类实例，还能加 guard 守卫条件；`_` 是通配符。","code":"def handle(command):\n    match command.split():\n        case [\"go\", direction]:\n            return f\"向 {direction} 前进\"\n        case [\"look\"]:\n            return \"四处张望\"\n        case _:\n            return \"未知命令\"\n\nprint(handle(\"go north\"))\nprint(handle(\"look\"))","output":"向 north 前进\n四处张望","tip":"match 不会自动贯穿到下一个 case；变量名在模式中会捕获值，别把已有变量当常量用。","leaves":[{"title":"字面量模式","desc":"case 1 / \"go\""},{"title":"序列/映射模式","desc":"解构列表、元组、字典"},{"title":"类模式","desc":"case Point(x=0, y=0)"},{"title":"守卫 guard","desc":"case x if x > 0"}],"lang":"python"},{"id":"practice","title":"流程实战","summary":"把条件与循环组合起来，就能完成九九乘法表、猜数字、素数判断、打印菱形等经典练习。先拆步骤，再写循环，最后处理边界。","code":"for i in range(1, 10):\n    for j in range(1, i + 1):\n        print(f\"{j}×{i}={i*j}\", end=\"\\t\")\n    print()","output":"1×1=1\n1×2=2   2×2=4\n...（共 9 行）","tip":"打印表格时用 end 控制不换行、用 \\t 对齐；先让程序跑通，再优化格式。","leaves":[{"title":"九九乘法表","desc":"双重 for + end"},{"title":"猜数字","desc":"while + input + 条件"},{"title":"素数判断","desc":"2 到 sqrt(n) 试除"},{"title":"打印菱形","desc":"空格与星号的数量规律"}],"lang":"python"}]},{"id":"data","num":"04","title":"核心数据结构","subtitle":"字符串、列表、元组、字典、集合","icon":"boxes","color":"#7A5AF8","tint":"#F0ECFF","topics":[{"id":"str","title":"字符串 str","summary":"字符串是不可变的 Unicode 序列。用索引和切片取字符，用 strip / split / replace / join 等方法处理文本；大量拼接优先用 join，格式化优先 f-string。","code":"s = \"  Hello, Python!  \"\nprint(s.strip())\nprint(s.strip().lower())\nprint(s[2:7])\nprint(\"-\".join([\"2026\", \"10\", \"28\"]))\nprint(\"python\".startswith(\"py\"), \"123\".isdigit())","output":"Hello, Python!\nhello, python!\nHello\n2026-10-28\nTrue True","tip":"字符串方法都返回新字符串，原串不会变；切片越界不报错，索引越界才会 IndexError。","leaves":[{"title":"创建与转义","desc":"单/双/三引号，r\"\" 原始串"},{"title":"索引与切片","desc":"s[0] / s[-1] / s[1:5:2]"},{"title":"常用方法","desc":"strip / split / replace / join"},{"title":"格式化与编码","desc":"f-string / encode / decode"}],"lang":"python"},{"id":"list","title":"列表 list","summary":"列表是有序、可变的容器，元素类型可以不同。append / extend / insert 增加，remove / pop / del 删除，sort 原地排序，切片可以批量取值和赋值。","code":"nums = [3, 1, 4]\nnums.append(2)\nnums.insert(0, 9)\nnums.remove(1)\nlast = nums.pop()\nnums.sort(reverse=True)\nprint(nums, last)","output":"[9, 4, 3] 2","tip":"sort() 原地排序并返回 None；sorted() 返回新列表。赋值 b = a 不会复制列表，只复制引用。","leaves":[{"title":"增删改查","desc":"append / insert / remove / pop"},{"title":"排序与反转","desc":"sort / sorted / reverse"},{"title":"切片赋值","desc":"nums[1:3] = [...]"},{"title":"浅拷贝与深拷贝","desc":"copy / deepcopy"}],"lang":"python"},{"id":"tuple","title":"元组 tuple","summary":"元组是有序、不可变的序列，常用于表示固定结构（坐标、RGB、数据库一行）。单元素元组必须写成 (42,)；元组可解包，也可作为字典的键。","code":"point = (3, 5)\nx, y = point\nsingle = (42,)        # 单元素元组必须有逗号\nprint(x, y, single)\nprint(point[0], point[-1])\n# point[0] = 10       # TypeError：不可变","output":"3 5 (42,)\n3 5","tip":"(42) 只是整数， (42,) 才是元组；不可变不等于内部元素都不可变，元组里可以放列表。","leaves":[{"title":"不可变序列","desc":"创建后不能增删改"},{"title":"单元素元组","desc":"(42,) 的逗号不能省"},{"title":"解包","desc":"x, y = point；*rest 收集"},{"title":"namedtuple","desc":"带字段名的轻量元组"}],"lang":"python"},{"id":"dict","title":"字典 dict","summary":"字典保存键值对，键必须可哈希且唯一。用 d[k] 或 get 访问，update 批量更新，items 遍历键值对；3.9+ 可以用 | 合并字典。","code":"student = {\"name\": \"小明\", \"age\": 18}\nstudent[\"score\"] = 95\nprint(student.get(\"city\", \"未知\"))\nfor key, value in student.items():\n    print(key, value)\nprint(student | {\"city\": \"北京\"})   # 3.9+ 合并","output":"未知\nname 小明\nage 18\nscore 95\n{'name': '小明', 'age': 18, 'score': 95, 'city': '北京'}","tip":"用 d[k] 访问不存在的键会 KeyError；不确定时用 get。列表不能做键，元组可以。","leaves":[{"title":"创建字典","desc":"{} / dict() / zip / 推导式"},{"title":"安全访问","desc":"get / setdefault / in"},{"title":"增删改","desc":"d[k]=v / update / pop"},{"title":"遍历与合并","desc":"items / | / **"}],"lang":"python"},{"id":"set","title":"集合 set","summary":"集合是无序、不重复的可变容器，成员测试平均 O(1)，最适合去重和集合运算。支持并集 |、交集 &、差集 -、对称差 ^；不可变版本是 frozenset。","code":"a = {1, 2, 3}\nb = {3, 4}\nprint(a | b)      # 并集\nprint(a & b)      # 交集\nprint(a - b)      # 差集\nprint(a ^ b)      # 对称差\nprint(len(set([1, 1, 2, 2, 3])))","output":"{1, 2, 3, 4}\n{3}\n{1, 2}\n{1, 2, 4}\n3","tip":"空集合必须写 set()，{} 是空字典；集合无序，不能索引，也不保证输出顺序。","leaves":[{"title":"创建集合","desc":"set() / {1, 2, 3}"},{"title":"集合运算","desc":"| & - ^ / 子集 / 超集"},{"title":"常用方法","desc":"add / remove / discard"},{"title":"去重与成员测试","desc":"O(1) 查找，天然去重"}],"lang":"python"},{"id":"comp","title":"推导式","summary":"推导式用一行表达式完成“转换 + 过滤”，可生成列表、字典、集合或生成器。支持条件 if、多重 for，但超过两层就该考虑可读性。","code":"squares = [x * x for x in range(1, 6)]\nevens = [x for x in range(10) if x % 2 == 0]\npairs = {x: x * x for x in range(1, 4)}\nunique = {c.lower() for c in \"Hello\"}\nprint(squares, evens, pairs, unique)","output":"[1, 4, 9, 16, 25] [0, 2, 4, 6, 8] {1: 1, 2: 4, 3: 9} {'h', 'e', 'l', 'o'}","tip":"生成器表达式用圆括号，返回迭代器，只能消费一次；推导式里不要写有副作用的复杂逻辑。","leaves":[{"title":"列表推导式","desc":"[表达式 for x in 可迭代]"},{"title":"字典/集合推导式","desc":"{k: v for ...} / {x for ...}"},{"title":"生成器表达式","desc":"(x for x in ...) 省内存"},{"title":"条件与多重循环","desc":"if 过滤，for 嵌套"}],"lang":"python"},{"id":"choose","title":"数据结构选择","summary":"列表适合有序可变集合，元组适合固定结构，字典适合键值查询，集合适合去重与成员测试。频繁头部插入用 deque；需要先进先出不要用 list.pop(0)。","code":"from collections import deque\n\nstack = [1, 2, 3]\nstack.append(4)\nprint(stack.pop())        # 后进先出\n\nqueue = deque([1, 2, 3])\nqueue.append(4)\nprint(queue.popleft())    # 先进先出","output":"4\n1","tip":"list 头部插入/删除是 O(n)，deque 两端操作是 O(1)；字典/集合查询平均 O(1)，列表查询 O(n)。","leaves":[{"title":"四种结构对比","desc":"有序/可变/去重/键值"},{"title":"时间复杂度","desc":"list O(n)，dict/set O(1)"},{"title":"栈与队列","desc":"list 做栈，deque 做队列"},{"title":"拷贝语义","desc":"赋值=引用，copy=浅拷贝"}],"lang":"python"}]},{"id":"func","num":"05","title":"函数","subtitle":"把代码封装成可复用的能力","icon":"function","color":"#BE123C","tint":"#FDECF1","topics":[{"id":"def","title":"定义与调用","summary":"用 def 定义函数，return 返回结果；没有 return 时返回 None。参数支持位置、关键字、默认值、*args、**kwargs，顺序是：位置 -> 默认 -> *args -> 仅关键字 -> **kwargs。","code":"def order(name, count=1, *args, vip=False, **kwargs):\n    print(name, count, args, vip, kwargs)\n\norder(\"咖啡\", 2, \"加糖\", \"少冰\", vip=True, note=\"外带\")","output":"咖啡 2 ('加糖', '少冰') True {'note': '外带'}","tip":"默认参数不要用可变对象（[]、{}），否则所有调用会共享同一个对象；用 None 做默认值再在函数内创建。","leaves":[{"title":"定义与调用","desc":"def 函数名(参数): ..."},{"title":"return","desc":"返回结果；没有则返回 None"},{"title":"位置/关键字参数","desc":"按顺序传 / 按名字传"},{"title":"默认参数陷阱","desc":"不要用 [] 或 {} 做默认值"}],"lang":"python"},{"id":"scope","title":"作用域与闭包","summary":"Python 按 LEGB 查找名字：Local -> Enclosing -> Global -> Built-in。函数内赋值默认创建局部变量；要修改外部变量用 global（全局）或 nonlocal（嵌套函数外层）。","code":"count = 0\n\ndef outer():\n    count = 10\n    def inner():\n        nonlocal count\n        count += 1\n        return count\n    return inner\n\nf = outer()\nprint(f(), f())","output":"11 12","tip":"少用 global；如果函数需要修改大量外部状态，通常说明应该传参或封装成类。","leaves":[{"title":"LEGB 规则","desc":"局部 -> 嵌套 -> 全局 -> 内置"},{"title":"global / nonlocal","desc":"声明要修改外层变量"},{"title":"闭包","desc":"内层函数记住外层变量"},{"title":"命名空间","desc":"名字到对象的映射"}],"lang":"python"},{"id":"lambda","title":"lambda 匿名函数","summary":"lambda 用来写只有一个表达式的匿名函数，常作为 sorted / map / filter 的 key 或回调。复杂逻辑不要硬塞进 lambda，def 更清晰。","code":"students = [(\"小明\", 90), (\"小红\", 95), (\"小刚\", 80)]\nstudents.sort(key=lambda s: s[1], reverse=True)\nprint(students)\nprint(list(map(lambda x: x * 2, [1, 2, 3])))","output":"[('小红', 95), ('小明', 90), ('小刚', 80)]\n[2, 4, 6]","tip":"lambda 不能写语句（不能赋值、不能 return）；调试时匿名函数没有名字，堆栈不友好。","leaves":[{"title":"lambda 语法","desc":"lambda 参数: 表达式"},{"title":"配合 sorted","desc":"key=lambda x: x[1]"},{"title":"map / filter","desc":"函数式风格的简单转换"},{"title":"与 def 的区别","desc":"单表达式 vs 完整函数体"}],"lang":"python"},{"id":"recursion","title":"递归","summary":"递归是函数调用自身，必须同时有基准条件（何时停）和递归条件（如何缩小问题）。阶乘、斐波那契、汉诺塔、树遍历都是经典场景。","code":"def factorial(n):\n    if n <= 1:          # 基准条件\n        return 1\n    return n * factorial(n - 1)\n\nprint(factorial(5))","output":"120","tip":"Python 默认递归深度约 1000，过深会 RecursionError；能用循环就用循环，重复子问题可用 lru_cache。","leaves":[{"title":"基准与递归","desc":"先写停止条件，再写递推"},{"title":"阶乘/斐波那契","desc":"经典入门模型"},{"title":"汉诺塔","desc":"递归拆分大盘与小盘"},{"title":"递归深度","desc":"默认约 1000，注意栈溢出"}],"lang":"python"},{"id":"decorator","title":"装饰器","summary":"装饰器是一个接收函数、返回新函数的高阶函数，用来在不改原函数代码的前提下增加计时、日志、缓存、权限等功能。@timer 等价于 func = timer(func)。","code":"from functools import wraps\nimport time\n\ndef timer(func):\n    @wraps(func)\n    def wrapper(*args, **kwargs):\n        start = time.perf_counter()\n        result = func(*args, **kwargs)\n        print(f\"{func.__name__} 用时 {time.perf_counter()-start:.4f}s\")\n        return result\n    return wrapper\n\n@timer\ndef slow_add(a, b):\n    time.sleep(0.1)\n    return a + b\n\nprint(slow_add(1, 2))","output":"slow_add 用时 0.1002s\n3","tip":"一定要加 @wraps(func)，否则原函数的 __name__、__doc__ 会丢失；装饰器在定义时执行一次。","leaves":[{"title":"函数是一等公民","desc":"函数可赋值、传参、返回"},{"title":"装饰器原理","desc":"func = decorator(func)"},{"title":"@wraps","desc":"保留原函数元信息"},{"title":"带参装饰器","desc":"多一层函数接收参数"}],"lang":"python"},{"id":"generator","title":"生成器","summary":"生成器用 yield 逐个产出值，惰性求值、节省内存，适合大数据流和无限序列。生成器表达式 (x for x in ...) 是更简洁的写法；生成器只能遍历一次。","code":"def countdown(n):\n    while n > 0:\n        yield n\n        n -= 1\n\nfor x in countdown(3):\n    print(x)\n\ngen = (x * x for x in range(5))\nprint(next(gen), list(gen))","output":"3\n2\n1\n0 [1, 4, 9, 16]","tip":"生成器不是列表，不能 len() 或下标访问；调试时可以先 list(gen) 看内容，但这样会一次性耗尽。","leaves":[{"title":"yield","desc":"产出值并暂停，下次继续"},{"title":"惰性求值","desc":"用到才算，省内存"},{"title":"生成器表达式","desc":"(x for x in ...)"},{"title":"send / yield from","desc":"双向通信与委托"}],"lang":"python"},{"id":"builtins","title":"内置函数精选","summary":"len、range、enumerate、zip、sorted、reversed、sum、min、max、any、all、map、filter、isinstance 是日常使用频率最高的一批函数，先掌握它们能少写很多循环。","code":"nums = [3, 1, 4, 1, 5]\nprint(sorted(nums), list(reversed(nums)))\nprint(sum(nums), min(nums), max(nums))\nprint(any(x > 4 for x in nums), all(x > 0 for x in nums))\nprint(dict(zip([\"a\", \"b\"], [1, 2])))","output":"[1, 1, 3, 4, 5] [5, 1, 4, 1, 3]\n14 1 5\nTrue True\n{'a': 1, 'b': 2}","tip":"sorted 返回新列表，list.sort 原地修改；any/all 会短路，传入生成器表达式更省内存。","leaves":[{"title":"len/range/zip","desc":"长度、数字序列、并行遍历"},{"title":"sorted/reversed","desc":"排序与反转，返回新对象"},{"title":"sum/min/max","desc":"求和与极值"},{"title":"any/all","desc":"任一为真 / 全部为真"}],"lang":"python"},{"id":"functional","title":"函数式工具","summary":"functools 提供 partial（固定部分参数）、reduce（累积归约）、lru_cache（缓存）和 wraps；operator 提供 itemgetter / attrgetter，让排序和取值更简洁。","code":"from functools import partial, reduce\nfrom operator import itemgetter\n\nadd10 = partial(lambda a, b: a + b, 10)\nprint(add10(5))\nprint(reduce(lambda a, b: a * b, [1, 2, 3, 4]))\nprint(sorted([(\"b\", 2), (\"a\", 1)], key=itemgetter(1)))","output":"15\n24\n[('a', 1), ('b', 2)]","tip":"可读性优先：reduce 多数场景可用 sum 或循环替代；lru_cache 要求参数可哈希。","leaves":[{"title":"partial","desc":"固定部分参数，生成新函数"},{"title":"reduce","desc":"把序列归约为一个值"},{"title":"lru_cache","desc":"缓存重复计算结果"},{"title":"itemgetter","desc":"按位置/键取值的 key 函数"}],"lang":"python"}]},{"id":"oop","num":"06","title":"面向对象","subtitle":"用类与对象组织复杂程序","icon":"cube","color":"#0369A1","tint":"#E8F4FB","topics":[{"id":"class","title":"类与对象","summary":"类是对象的模板，对象是类的实例。__init__ 在创建对象时初始化实例属性，self 指向实例本身。类属性被所有实例共享，实例属性各自独立。","code":"class Student:\n    school = \"阳光中学\"          # 类属性\n\n    def __init__(self, name, score):\n        self.name = name         # 实例属性\n        self.score = score\n\n    def introduce(self):\n        return f\"我是 {self.name}，来自 {self.school}\"\n\ns = Student(\"小明\", 90)\nprint(s.introduce())","output":"我是 小明，来自 阳光中学","tip":"self 不是关键字但约定俗成；忘记写 self 参数，调用方法时会报“多传了一个参数”。","leaves":[{"title":"class 定义","desc":"class 类名: ..."},{"title":"__init__","desc":"创建对象时自动调用"},{"title":"self","desc":"指向实例，方法第一个参数"},{"title":"实例属性 vs 类属性","desc":"各自独立 vs 全体共享"}],"lang":"python"},{"id":"encaps","title":"封装与 property","summary":"Python 用命名约定表达访问级别：_x 表示内部使用，__x 会触发名称改写。property 把方法伪装成属性，可以在赋值时做校验，实现受控访问。","code":"class Account:\n    def __init__(self, balance):\n        self._balance = balance      # 约定：内部使用\n\n    @property\n    def balance(self):\n        return self._balance\n\n    @balance.setter\n    def balance(self, value):\n        if value < 0:\n            raise ValueError(\"余额不能为负\")\n        self._balance = value\n\na = Account(100)\na.balance = 200\nprint(a.balance)","output":"200","tip":"Python 没有真正的 private；__x 只是改名为 _类名__x，不是安全边界。","leaves":[{"title":"_ 与 __","desc":"保护约定 / 名称改写"},{"title":"property","desc":"把方法当属性访问"},{"title":"setter/deleter","desc":"赋值校验与删除行为"},{"title":"只读属性","desc":"只定义 getter 不定义 setter"}],"lang":"python"},{"id":"inherit","title":"继承与多态","summary":"子类继承父类的属性和方法，可重写方法实现多态；super() 按 MRO 调用父类。多继承时 Python 用 C3 线性化确定方法查找顺序。","code":"class Animal:\n    def speak(self):\n        return \"...\"\n\nclass Dog(Animal):\n    def speak(self):\n        return \"汪汪\"\n\nclass Cat(Animal):\n    def speak(self):\n        return \"喵喵\"\n\nfor a in (Dog(), Cat()):\n    print(a.speak())\nprint(Dog.__mro__)","output":"汪汪\n喵喵\n(<class '__main__.Dog'>, <class '__main__.Animal'>, <class 'object'>)","tip":"优先组合而不是深层继承；多继承容易让 MRO 变复杂，能用 mixin 就用小而专的类。","leaves":[{"title":"单继承","desc":"class Child(Parent)"},{"title":"多继承","desc":"class C(A, B)"},{"title":"super()","desc":"按 MRO 调用父类"},{"title":"MRO","desc":"方法解析顺序，C3 算法"}],"lang":"python"},{"id":"poly","title":"多态与抽象","summary":"多态让不同对象对同一调用作出不同响应。Python 更依赖鸭子类型：只要对象有需要的方法就能用；需要强制接口时用 ABC 抽象基类。","code":"from abc import ABC, abstractmethod\n\nclass Shape(ABC):\n    @abstractmethod\n    def area(self):\n        ...\n\nclass Square(Shape):\n    def __init__(self, side):\n        self.side = side\n    def area(self):\n        return self.side ** 2\n\nprint(Square(3).area())","output":"9","tip":"不要为了类型而类型；Python 的灵活性来自协议（duck typing），ABC 适合需要明确约束的公共接口。","leaves":[{"title":"方法重写","desc":"子类覆盖父类实现"},{"title":"鸭子类型","desc":"有对应方法就能用"},{"title":"ABC 抽象基类","desc":"强制子类实现接口"},{"title":"isinstance/issubclass","desc":"类型与继承关系判断"}],"lang":"python"},{"id":"classmethod","title":"类方法与静态方法","summary":"实例方法第一个参数是 self；@classmethod 第一个参数是 cls，常用于工厂方法；@staticmethod 不需要 self/cls，只是挂在类命名空间下的普通函数。","code":"class Temperature:\n    def __init__(self, celsius):\n        self.celsius = celsius\n\n    @classmethod\n    def from_fahrenheit(cls, f):\n        return cls((f - 32) * 5 / 9)\n\n    @staticmethod\n    def is_freezing(c):\n        return c <= 0\n\nt = Temperature.from_fahrenheit(212)\nprint(round(t.celsius, 1), Temperature.is_freezing(-5))","output":"100.0 True","tip":"工厂方法返回 cls(...) 而不是写死类名，子类继承时才能正确创建子类实例。","leaves":[{"title":"实例方法","desc":"第一个参数 self"},{"title":"@classmethod","desc":"第一个参数 cls，可访问类"},{"title":"@staticmethod","desc":"无 self/cls，纯工具函数"},{"title":"工厂方法","desc":"用类方法提供多种构造方式"}],"lang":"python"},{"id":"magic","title":"魔术方法","summary":"以双下划线开头和结尾的方法是 Python 的协议钩子：__str__ 控制打印，__len__ 支持 len()，__getitem__ 支持下标，__eq__ 控制相等，__iter__/__next__ 支持迭代。","code":"class Book:\n    def __init__(self, title, pages):\n        self.title = title\n        self.pages = pages\n\n    def __str__(self):\n        return f\"《{self.title}》\"\n\n    def __len__(self):\n        return self.pages\n\n    def __eq__(self, other):\n        return self.title == other.title\n\nb = Book(\"Python 入门\", 320)\nprint(b, len(b), b == Book(\"Python 入门\", 999))","output":"《Python 入门》 320 True","tip":"__repr__ 面向开发者、__str__ 面向用户；定义了 __eq__ 后，对象默认不再可哈希，需要时同时定义 __hash__。","leaves":[{"title":"__str__/__repr__","desc":"用户可读 / 调试表示"},{"title":"__len__/__getitem__","desc":"支持 len() 与下标"},{"title":"__eq__/__hash__","desc":"相等性与哈希一致性"},{"title":"运算符重载","desc":"__add__ / __lt__ 等"}],"lang":"python"},{"id":"dataclass","title":"数据类与枚举","summary":"dataclass 自动生成 __init__、__repr__、__eq__，适合以数据为主的类；Enum 定义一组具名常量；namedtuple 是轻量不可变记录；__slots__ 可减少内存占用。","code":"from dataclasses import dataclass\nfrom enum import Enum\n\n@dataclass\nclass Point:\n    x: int\n    y: int\n\nclass Color(Enum):\n    RED = \"red\"\n    GREEN = \"green\"\n\np = Point(1, 2)\nprint(p, p == Point(1, 2), Color.RED.value)","output":"Point(x=1, y=2) True red","tip":"dataclass 默认可变；需要不可变加 frozen=True。Enum 成员是单例，比较用 is 或 == 都可以。","leaves":[{"title":"@dataclass","desc":"自动生成常用方法"},{"title":"Enum","desc":"具名常量，避免魔法值"},{"title":"namedtuple","desc":"带字段名的不可变元组"},{"title":"__slots__","desc":"限制属性、节省内存"}],"lang":"python"},{"id":"design","title":"设计原则与模式","summary":"面向对象的目标是管理复杂度，不是堆砌模式。优先组合、单一职责、依赖抽象；工厂、单例、观察者是常见模式，但不要为了模式而模式。","code":"class Logger:\n    _instance = None\n\n    def __new__(cls):\n        if cls._instance is None:\n            cls._instance = super().__new__(cls)\n        return cls._instance\n\nprint(Logger() is Logger())","output":"True","tip":"单例会让测试和并发变复杂，多数场景用模块级对象或依赖注入更简单；先写简单代码，再重构。","leaves":[{"title":"SOLID","desc":"单一职责/开闭/里氏/接口/依赖"},{"title":"组合优于继承","desc":"has-a 往往比 is-a 灵活"},{"title":"工厂/单例","desc":"创建逻辑与全局唯一实例"},{"title":"观察者模式","desc":"事件发布与订阅"}],"lang":"python"}]},{"id":"error","num":"07","title":"异常与调试","subtitle":"让程序在出错时优雅地活下去","icon":"shield","color":"#B45309","tint":"#FBF2E6","topics":[{"id":"errors","title":"错误与异常","summary":"语法错误在解析阶段就会失败；异常在运行时抛出。读 Traceback 时先看最后一行（异常类型和信息），再从下往上看调用栈，定位到自己的代码。","code":"try:\n    n = int(\"abc\")\nexcept ValueError as e:\n    print(type(e).__name__, e)","output":"ValueError invalid literal for int() with base 10: 'abc'","tip":"不要只看“报错了”三个字；异常类型和最后一行信息通常已经告诉你 80% 的原因。","leaves":[{"title":"SyntaxError","desc":"语法错误，代码无法解析"},{"title":"常见异常类型","desc":"ValueError/TypeError/KeyError..."},{"title":"Traceback 阅读","desc":"最后一行 + 调用栈"},{"title":"异常 vs 错误","desc":"可恢复 vs 程序缺陷"}],"lang":"python"},{"id":"catch","title":"捕获异常","summary":"try 包住可能出错的代码，except 捕获指定异常，else 在无异常时执行，finally 无论怎样都执行。捕获多个异常可以用元组，as e 拿到异常对象。","code":"def divide(a, b):\n    try:\n        result = a / b\n    except ZeroDivisionError:\n        print(\"除数不能为 0\")\n        return None\n    except (TypeError, ValueError) as e:\n        print(\"参数错误：\", e)\n        return None\n    else:\n        print(\"计算成功\")\n        return result\n    finally:\n        print(\"结束\")\n\nprint(divide(10, 2))","output":"计算成功\n结束\n5.0","tip":"尽量捕获具体异常；裸 except 会连 KeyboardInterrupt、SystemExit 一起吞掉，后患无穷。","leaves":[{"title":"try/except","desc":"捕获并处理指定异常"},{"title":"多个异常","desc":"except (A, B) as e"},{"title":"else/finally","desc":"无异常分支 / 必执行清理"},{"title":"异常传播","desc":"不处理就向上抛给调用者"}],"lang":"python"},{"id":"raise","title":"抛出与自定义","summary":"用 raise 主动抛出异常，raise ... from ... 保留异常链。自定义异常通常继承 Exception 或 ValueError，让调用者能精确捕获。assert 只适合内部断言，不要用于用户输入校验。","code":"class AgeError(ValueError):\n    pass\n\ndef set_age(age):\n    if not 0 <= age <= 120:\n        raise AgeError(f\"年龄不合法：{age}\")\n    return age\n\ntry:\n    set_age(200)\nexcept AgeError as e:\n    print(e)","output":"年龄不合法：200","tip":"assert 在 python -O 运行时会被移除，不能承担业务校验；用户输入请用 if + raise。","leaves":[{"title":"raise","desc":"主动抛出异常"},{"title":"raise from","desc":"保留原始异常链"},{"title":"自定义异常","desc":"继承 Exception/ValueError"},{"title":"assert","desc":"内部断言，可被 -O 移除"}],"lang":"python"},{"id":"debug","title":"调试与测试","summary":"print 适合快速定位，logging 适合长期记录，pdb/breakpoint 可以单步调试，IDE 断点更直观。单元测试用 unittest 或 pytest，把“手动点一遍”变成可重复的自动验证。","code":"import logging\nlogging.basicConfig(level=logging.INFO,\n                    format=\"%(levelname)s: %(message)s\")\n\ndef average(nums):\n    logging.debug(\"nums=%s\", nums)\n    return sum(nums) / len(nums)\n\nprint(average([1, 2, 3]))\n# breakpoint()  # 进入 pdb 调试","output":"2.0","tip":"不要用 print 记录生产日志；临时调试完记得删除或降级为 debug，避免刷屏。","leaves":[{"title":"print 调试","desc":"快速但不可长期保留"},{"title":"logging","desc":"分级、可配置、可落盘"},{"title":"pdb / breakpoint","desc":"单步、查看变量、调用栈"},{"title":"IDE 断点","desc":"图形化调试，条件断点"}],"lang":"python"},{"id":"best","title":"异常最佳实践","summary":"只捕获你知道如何处理的异常；不要静默吞掉；资源用 with 自动清理；日志记录上下文并保留原始异常；对外提供清晰的错误信息，对内保留堆栈。","code":"import logging\nlogger = logging.getLogger(__name__)\n\ndef load(path):\n    try:\n        with open(path, encoding=\"utf-8\") as f:\n            return f.read()\n    except FileNotFoundError:\n        logger.warning(\"文件不存在：%s\", path)\n        return \"\"\n\nprint(load(\"不存在.txt\"))","output":"WARNING: 文件不存在：不存在.txt","tip":"不要写 except Exception: pass；这会让真正的 bug 永远消失。捕获后要么处理，要么带上上下文重新抛出。","leaves":[{"title":"具体异常","desc":"避免捕获所有异常"},{"title":"不要吞异常","desc":"至少记录日志"},{"title":"资源清理","desc":"with / finally"},{"title":"异常链","desc":"raise ... from ..."}],"lang":"python"}]},{"id":"io","num":"08","title":"文件与 IO","subtitle":"读写文件、路径、CSV/JSON 与命令行","icon":"folder","color":"#15803D","tint":"#EAF7EE","topics":[{"id":"file","title":"文件读写","summary":"open 的常用模式：r 读、w 覆盖写、a 追加、x 独占创建，加 b 表示二进制。文本文件建议显式 encoding=\"utf-8\"；用 with 自动关闭文件，大文件逐行读。","code":"with open(\"demo.txt\", \"w\", encoding=\"utf-8\") as f:\n    f.write(\"第一行\\n第二行\\n\")\n\nwith open(\"demo.txt\", encoding=\"utf-8\") as f:\n    for line in f:\n        print(line.rstrip())","output":"第一行\n第二行","tip":"w 模式会清空原文件；读写二进制不要加 encoding；忘记 close 可能丢数据，用 with 最稳。","leaves":[{"title":"open 与 mode","desc":"r / w / a / x / b / +"},{"title":"读文件","desc":"read / readline / readlines"},{"title":"写文件","desc":"write / writelines"},{"title":"seek/tell","desc":"移动/获取文件指针"}],"lang":"python"},{"id":"path","title":"路径与目录","summary":"os 和 os.path 提供跨平台的目录操作；新代码更推荐 pathlib，用 / 拼接路径、用 exists / is_file / suffix 判断，用 glob / rglob 遍历文件。","code":"from pathlib import Path\n\np = Path(\"data\") / \"demo.txt\"\nprint(p, p.suffix, p.stem)\nprint(Path.cwd())\n# p.parent.mkdir(parents=True, exist_ok=True)\n# for file in Path(\".\").rglob(\"*.py\"):\n#     print(file)","output":"data\\demo.txt .txt demo\n（当前工作目录）","tip":"不要手写 \"/\" 或 \"\\\\\" 拼路径；用 pathlib 或 os.path.join，跨平台才可靠。","leaves":[{"title":"os 常用函数","desc":"getcwd / listdir / mkdir"},{"title":"os.path","desc":"join / exists / isfile"},{"title":"pathlib","desc":"面向对象的路径操作"},{"title":"遍历目录","desc":"os.walk / glob / rglob"}],"lang":"python"},{"id":"csvjson","title":"CSV 与 JSON","summary":"CSV 适合表格数据，用 csv.reader / DictReader 读、writer / DictWriter 写；JSON 适合嵌套结构，用 json.dumps / loads 在字符串与对象间转换，dump / load 直接操作文件。","code":"import csv, json\n\nrows = [{\"name\": \"小明\", \"score\": 90}, {\"name\": \"小红\", \"score\": 95}]\nwith open(\"scores.csv\", \"w\", newline=\"\", encoding=\"utf-8\") as f:\n    writer = csv.DictWriter(f, fieldnames=[\"name\", \"score\"])\n    writer.writeheader()\n    writer.writerows(rows)\n\ntext = json.dumps(rows, ensure_ascii=False, indent=2)\nprint(text)","output":"[\n  {\n    \"name\": \"小明\",\n    \"score\": 90\n  },\n  ...\n]","tip":"CSV 写入加 newline=\"\" 防止 Windows 空行；JSON 中文用 ensure_ascii=False，否则会变成 \\uXXXX。","leaves":[{"title":"csv.reader/writer","desc":"按行读写表格"},{"title":"DictReader/Writer","desc":"按表头映射为字典"},{"title":"json.dumps/loads","desc":"字符串 <-> 对象"},{"title":"ensure_ascii","desc":"中文不转义 + indent 美化"}],"lang":"python"},{"id":"xmlpickle","title":"XML 与 Pickle","summary":"XML 用 xml.etree.ElementTree 解析，适合配置和交换数据；pickle 能把 Python 对象序列化为字节流，但只能反序列化可信数据，绝不能加载来路不明的 pickle。","code":"import pickle\nimport xml.etree.ElementTree as ET\n\ndata = {\"name\": \"小明\", \"scores\": [90, 95]}\nblob = pickle.dumps(data)\nprint(pickle.loads(blob))\n\nxml = \"<root><user name='小明'><score>90<\/score><\/user><\/root>\"\nroot = ET.fromstring(xml)\nprint(root.find(\"user\").get(\"name\"), root.find(\"user/score\").text)","output":"{'name': '小明', 'scores': [90, 95]}\n小明 90","tip":"pickle 反序列化可以执行任意代码，是安全漏洞；跨语言/对外接口用 JSON。","leaves":[{"title":"ElementTree","desc":"parse / fromstring / find"},{"title":"XML 解析","desc":"标签、属性、文本、命名空间"},{"title":"pickle 序列化","desc":"dumps / loads / dump / load"},{"title":"安全警告","desc":"只反序列化可信数据"}],"lang":"python"},{"id":"with","title":"with 与上下文管理器","summary":"with 保证进入时准备资源、退出时清理资源，即使中途抛异常也会执行。自定义上下文管理器实现 __enter__ / __exit__，或用 @contextmanager 更简洁地写。","code":"from contextlib import contextmanager\n\n@contextmanager\ndef timer():\n    print(\"开始\")\n    try:\n        yield\n    finally:\n        print(\"结束\")\n\nwith timer():\n    print(\"处理中\")","output":"开始\n处理中\n结束","tip":"__exit__ 返回 True 会吞掉异常，慎用；@contextmanager 里的 yield 必须放在 try/finally 中确保清理。","leaves":[{"title":"with 语法","desc":"自动进入/退出，异常也清理"},{"title":"__enter__/__exit__","desc":"上下文管理器协议"},{"title":"contextmanager","desc":"用生成器快速实现"},{"title":"多资源管理","desc":"with open(a), open(b):"}],"lang":"python"},{"id":"cli","title":"命令行与子进程","summary":"sys.argv 拿到原始参数，argparse 生成友好的命令行接口；subprocess.run 调用外部程序，能捕获输出、设置超时、检查返回码。","code":"import sys, subprocess\n\nprint(\"脚本名：\", sys.argv[0])\nprint(\"参数：\", sys.argv[1:])\n\nresult = subprocess.run(\n    [sys.executable, \"-c\", \"print('来自子进程')\"],\n    capture_output=True, text=True, timeout=5\n)\nprint(result.stdout.strip())","output":"脚本名：demo.py\n参数：['--name', '小明']\n来自子进程","tip":"用参数列表而不是 shell=True 拼接字符串，避免命令注入；始终检查 returncode 或使用 check=True。","leaves":[{"title":"sys.argv","desc":"原始参数列表"},{"title":"argparse","desc":"位置参数/选项/帮助"},{"title":"subprocess.run","desc":"执行外部命令"},{"title":"返回值/超时","desc":"returncode / timeout / check"}],"lang":"python"},{"id":"stdio","title":"标准流与内存 IO","summary":"sys.stdin / stdout / stderr 是标准输入输出流；StringIO 在内存中模拟文本文件，常用于测试和字符串拼装；tempfile 创建临时文件，避免手工清理。","code":"import sys\nfrom io import StringIO\n\nbuf = StringIO()\nprint(\"写入缓冲区\", file=buf)\nprint(buf.getvalue().strip())\n\nprint(\"错误信息\", file=sys.stderr)","output":"写入缓冲区\n错误信息","tip":"正常数据写 stdout，错误/日志写 stderr；不要在生产代码里用 StringIO 拼接超大文本，直接用列表 join。","leaves":[{"title":"stdin/stdout/stderr","desc":"标准输入、输出、错误流"},{"title":"StringIO","desc":"内存中的文本文件"},{"title":"临时文件","desc":"tempfile，自动清理"},{"title":"重定向","desc":"print(file=...) / contextlib.redirect"}],"lang":"python"}]},{"id":"advanced","num":"09","title":"高级特性","subtitle":"迭代器、生成器、闭包与元编程","icon":"sparkles","color":"#9333EA","tint":"#F5ECFF","topics":[{"id":"iterator","title":"迭代器协议","summary":"可迭代对象实现 __iter__，迭代器同时实现 __iter__ 和 __next__；next 取下一个值，取完抛 StopIteration。for 循环本质上就是不断调用 next。","code":"class Countdown:\n    def __init__(self, start):\n        self.current = start\n\n    def __iter__(self):\n        return self\n\n    def __next__(self):\n        if self.current <= 0:\n            raise StopIteration\n        self.current -= 1\n        return self.current + 1\n\nprint(list(Countdown(3)))","output":"[3, 2, 1]","tip":"列表是可迭代对象但不是迭代器；iter(list) 才返回迭代器。迭代器只能往前走，不能回退。","leaves":[{"title":"iter/next","desc":"iter() 取迭代器，next() 取值"},{"title":"StopIteration","desc":"迭代结束的信号"},{"title":"自定义迭代器","desc":"实现 __iter__ + __next__"},{"title":"迭代协议","desc":"for 循环的底层机制"}],"lang":"python"},{"id":"genadv","title":"生成器进阶","summary":"yield 不仅可以产出值，还能通过 send 接收外部值，实现简单的协程；yield from 把迭代委托给另一个可迭代对象。生成器适合流式处理与管道。","code":"def echo():\n    while True:\n        value = yield\n        print(\"收到：\", value)\n\ng = echo()\nnext(g)          # 启动生成器\ng.send(\"你好\")\ng.close()","output":"收到：你好","tip":"send 前必须先 next 启动生成器；生成器关闭后再 send 会抛 StopIteration。","leaves":[{"title":"yield 双向通信","desc":"产出值，也能接收值"},{"title":"send","desc":"向暂停的生成器发送数据"},{"title":"yield from","desc":"委托给子生成器"},{"title":"无限序列","desc":"按需计算，不占内存"}],"lang":"python"},{"id":"unpack","title":"解包与切片","summary":"解包把序列/字典拆成独立参数：* 用于位置参数，** 用于关键字参数。切片 s[start:stop:step] 支持反转和步长；slice() 可以把切片规则存成对象。","code":"first, *middle, last = [1, 2, 3, 4, 5]\nprint(first, middle, last)\n\ndef f(a, b, c):\n    return a + b + c\nprint(f(*[1, 2, 3]))\nprint(f(**{\"a\": 1, \"b\": 2, \"c\": 3}))\nprint(\"Python\"[::-1])","output":"1 [2, 3, 4] 5\n6\n6\nnohtyP","tip":"解包数量要匹配；函数调用里 * 和 ** 可以组合，但同一个参数不能重复传值。","leaves":[{"title":"多重赋值","desc":"a, b = 1, 2"},{"title":"* 解包","desc":"收集剩余元素 / 展开序列"},{"title":"** 字典解包","desc":"展开为关键字参数"},{"title":"切片对象","desc":"start:stop:step / slice()"}],"lang":"python"},{"id":"closure","title":"闭包","summary":"闭包是内层函数引用了外层函数的变量，并且外层函数返回内层函数。闭包保存的是变量本身，不是创建时的值；循环中创建闭包要特别注意延迟绑定。","code":"def make_counter():\n    count = 0\n    def counter():\n        nonlocal count\n        count += 1\n        return count\n    return counter\n\nc = make_counter()\nprint(c(), c(), c())","output":"1 2 3","tip":"循环里创建 lambda 常见坑：所有函数共享同一个循环变量；用默认参数 f=lambda x=i: x 固定当前值。","leaves":[{"title":"闭包捕获","desc":"内层函数记住外层变量"},{"title":"nonlocal","desc":"修改外层函数变量"},{"title":"延迟绑定","desc":"循环变量的经典坑"},{"title":"应用场景","desc":"计数器、装饰器、配置函数"}],"lang":"python"},{"id":"decoadv","title":"装饰器进阶","summary":"带参数的装饰器需要多一层函数；类也可以作为装饰器；functools.lru_cache 能一行实现缓存。装饰器在模块导入时执行，适合做注册、计时、权限、重试。","code":"from functools import wraps\n\ndef repeat(times):\n    def decorator(func):\n        @wraps(func)\n        def wrapper(*args, **kwargs):\n            for _ in range(times):\n                result = func(*args, **kwargs)\n            return result\n        return wrapper\n    return decorator\n\n@repeat(3)\ndef hello(name):\n    print(\"你好\", name)\n\nhello(\"小明\")","output":"你好 小明\n你好 小明\n你好 小明","tip":"带参装饰器的调用链是 repeat(3)(hello)；写装饰器时先用最小例子验证 wrapper 的参数透传。","leaves":[{"title":"带参装饰器","desc":"三层函数：参数 -> 函数 -> wrapper"},{"title":"类装饰器","desc":"实现 __call__ 的类"},{"title":"缓存装饰器","desc":"lru_cache / cache"},{"title":"计时/日志","desc":"横切关注点复用"}],"lang":"python"},{"id":"lazy","title":"惰性与性能","summary":"列表推导式一次性生成所有元素，生成器表达式按需计算。数据量大、只需遍历一次时用生成器；需要随机访问、多次遍历时用列表。","code":"import sys\nlst = [x * x for x in range(1000)]\ngen = (x * x for x in range(1000))\nprint(len(lst), sys.getsizeof(lst))\nprint(type(gen), sys.getsizeof(gen))\nprint(sum(gen))","output":"1000 8856\n<class 'generator'> 208\n332833500","tip":"生成器只能消费一次；调试时 list(gen) 会耗尽它，之后 sum(gen) 就是 0。","leaves":[{"title":"列表 vs 生成器","desc":"全量 vs 按需"},{"title":"内存占用","desc":"生成器常量级内存"},{"title":"消费一次","desc":"不能重复遍历"},{"title":"性能取舍","desc":"CPU/内存/可读性"}],"lang":"python"},{"id":"meta","title":"元编程入门","summary":"元编程是“操作代码的代码”：getattr/setattr 动态访问属性，__getattr__ 处理缺失属性，元类控制类的创建，描述符管理属性访问。了解即可，业务代码慎用。","code":"class Person:\n    def __init__(self, name):\n        self.name = name\n\np = Person(\"小明\")\nprint(getattr(p, \"name\"))\nsetattr(p, \"age\", 18)\nprint(p.__dict__)\nprint(hasattr(p, \"city\"))","output":"小明\n{'name': '小明', 'age': 18}\nFalse","tip":"元编程强大但难维护；框架/库常用，业务代码优先显式结构。不要用 getattr 拼字符串代替正常属性访问。","leaves":[{"title":"getattr/setattr","desc":"动态读写属性"},{"title":"__getattr__","desc":"缺失属性时调用"},{"title":"元类","desc":"控制类的创建过程"},{"title":"描述符","desc":"管理属性访问协议"}],"lang":"python"}]},{"id":"module","num":"10","title":"模块与工程化","subtitle":"从单文件脚本到可维护项目","icon":"package","color":"#475569","tint":"#EEF2F6","topics":[{"id":"import","title":"模块与包","summary":"模块就是一个 .py 文件，包是带 __init__.py 的目录（命名空间包除外）。import 会执行模块顶层代码；from ... import 只取指定名字；as 可以起别名。","code":"# math_tools.py\nPI = 3.14159\n\ndef add(a, b):\n    return a + b\n\n# main.py\nimport math_tools\nfrom math_tools import add as plus\nprint(math_tools.PI, plus(1, 2))","output":"3.14159 3","tip":"模块名不要和标准库重名（如 random.py）；导入失败先检查 sys.path 和当前工作目录。","leaves":[{"title":"import 语法","desc":"import 模块 / from 模块 import 名字"},{"title":"模块搜索路径","desc":"sys.path，当前目录优先"},{"title":"包与 __init__","desc":"目录 + 包初始化文件"},{"title":"绝对/相对导入","desc":"推荐绝对导入，清晰"}],"lang":"python"},{"id":"name","title":"__name__ 与入口","summary":"每个模块都有 __name__：被直接运行时是 \"__main__\"，被导入时是模块名。用 if __name__ == \"__main__\": 把“只在该脚本运行时执行”的代码保护起来。","code":"def main():\n    print(\"作为程序运行\")\n\nif __name__ == \"__main__\":\n    main()","output":"作为程序运行","tip":"被 import 时不会执行 main；这是 Python 项目最常见的入口写法，测试和多进程也依赖它。","leaves":[{"title":"__name__","desc":"模块的内置名字"},{"title":"__main__","desc":"直接运行时的特殊值"},{"title":"入口保护","desc":"if __name__ == \"__main__\""},{"title":"被导入时","desc":"只提供函数/类，不自动执行"}],"lang":"python"},{"id":"venv2","title":"虚拟环境与依赖","summary":"每个项目独立虚拟环境，避免 A 项目要 requests 2.x、B 项目要 3.x 的冲突。pip 常用 install / uninstall / list / freeze；requirements.txt 记录依赖，pip install -r 一键安装。","code":"# 终端\npython -m venv .venv\n.venv\\Scripts\\activate\npython -m pip install -r requirements.txt\npip list\npip freeze > requirements.txt","output":"Successfully installed ...","tip":"提交 requirements.txt，不提交 .venv；生产环境建议锁定精确版本，或用 pyproject.toml + uv/poetry 管理。","leaves":[{"title":"venv 创建","desc":"python -m venv .venv"},{"title":"激活脚本","desc":"Windows / macOS / Linux 不同"},{"title":"pip 常用命令","desc":"install / uninstall / list / freeze"},{"title":"依赖冲突","desc":"独立环境 + 锁版本"}],"lang":"bash"},{"id":"pep8","title":"PEP 8 与代码规范","summary":"PEP 8 是 Python 的官方风格指南：4 空格缩进、snake_case 变量/函数、PascalCase 类、常量全大写、运算符两侧空格、行长适度。用 black/ruff 自动格式化，比手写更可靠。","code":"MAX_RETRY = 3\n\nclass HttpClient:\n    def fetch(self, url: str) -> str:\n        \"\"\"获取网页内容。\"\"\"\n        return url\n\ndef calculate_total(prices: list[float]) -> float:\n    return sum(prices)","output":"（无输出，重点是命名与格式）","tip":"规范不是审美问题：统一风格能减少 code review 噪音，也能让工具更好地发现真正的 bug。","leaves":[{"title":"缩进/空行","desc":"4 空格，顶层函数间空两行"},{"title":"命名规范","desc":"snake_case / PascalCase / UPPER"},{"title":"docstring","desc":"说明用途、参数、返回值"},{"title":"black/ruff","desc":"自动格式化 + 静态检查"}],"lang":"python"},{"id":"test","title":"单元测试","summary":"unittest 是标准库，pytest 更简洁、生态更好。测试文件通常命名 test_*.py，一个测试只验证一个行为；fixture 准备环境，parametrize 覆盖多组输入。","code":"import unittest\n\ndef add(a, b):\n    return a + b\n\nclass TestAdd(unittest.TestCase):\n    def test_add(self):\n        self.assertEqual(add(2, 3), 5)\n    def test_negative(self):\n        self.assertEqual(add(-1, 1), 0)\n\nif __name__ == \"__main__\":\n    unittest.main()","output":"..\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\nOK","tip":"先写一个会失败的测试，再写实现让它通过；测试不要依赖执行顺序和外部网络。","leaves":[{"title":"unittest","desc":"TestCase / assertEqual"},{"title":"pytest","desc":"assert / fixture / 插件"},{"title":"fixture","desc":"准备与清理测试环境"},{"title":"覆盖率","desc":"coverage.py，关注关键路径"}],"lang":"python"},{"id":"structure","title":"项目结构与打包","summary":"小型项目可以单文件，中大型项目推荐 src 布局：源码放 src/包名，测试放 tests，根目录放 pyproject.toml、README、LICENSE。pyproject.toml 统一管理构建、依赖和工具配置。","code":"# 目录结构示意\nmy_project/\n├── pyproject.toml\n├── README.md\n├── src/\n│   └── my_pkg/\n│       ├── __init__.py\n│       └── core.py\n└── tests/\n    └── test_core.py","output":"（目录结构，无运行输出）","tip":"不要把所有代码堆在 main.py；按职责拆模块，入口只做参数解析和流程编排。","leaves":[{"title":"src 布局","desc":"源码与测试分离"},{"title":"pyproject.toml","desc":"构建、依赖、工具配置"},{"title":"build/install","desc":"pip install -e . / python -m build"},{"title":"发布 PyPI","desc":"版本号、README、许可证"}],"lang":"text"},{"id":"logging","title":"日志与配置","summary":"logging 比 print 更适合生产：有级别、可输出到文件、可轮转、可统一格式。库代码用 logger = logging.getLogger(__name__)，应用入口再配置 handler；密钥和配置从环境变量读取。","code":"import logging, os\n\nlogging.basicConfig(\n    level=logging.INFO,\n    format=\"%(asctime)s %(levelname)s %(name)s: %(message)s\"\n)\nlogger = logging.getLogger(__name__)\nlogger.info(\"启动，DEBUG=%s\", os.getenv(\"DEBUG\", \"0\"))","output":"2026-10-28 21:00:00,000 INFO __main__: 启动，DEBUG=0","tip":"不要记录密码、令牌、身份证号；日志级别用错会淹没重要信息，生产默认 INFO。","leaves":[{"title":"logging 级别","desc":"DEBUG/INFO/WARNING/ERROR"},{"title":"Handler/Formatter","desc":"输出目标与格式"},{"title":"文件日志","desc":"filename / 轮转"},{"title":"配置管理","desc":"环境变量 / .env / 配置文件"}],"lang":"python"}]},{"id":"stdlib","num":"11","title":"标准库","subtitle":"常用轮子，别再重复造","icon":"library","color":"#0891B2","tint":"#E6F7FA","topics":[{"id":"re","title":"正则表达式 re","summary":"正则用一套元字符描述文本模式。match 从开头匹配，search 找任意位置，findall 返回所有匹配，sub 替换，split 分割；复杂表达式先 compile 并写注释。","code":"import re\n\ntext = \"联系我：13812345678 或 010-12345678\"\nphones = re.findall(r\"1[3-9]\\d{9}\", text)\nprint(phones)\n\nm = re.search(r\"(?P<year>\\d{4})-(?P<month>\\d{2})\", \"日期 2026-10\")\nprint(m.group(\"year\"), m.group(\"month\"))","output":"['13812345678']\n2026 10","tip":"正则用原始字符串 r\"\"，否则 \\d 会被 Python 先转义；贪婪 .* 会尽量多匹配，加 ? 变非贪婪。","leaves":[{"title":"元字符","desc":". ^ $ * + ? {} [] \\ | ()"},{"title":"量词","desc":"* + ? {m,n}，贪婪/非贪婪"},{"title":"分组/断言","desc":"() / (?P<name>) / (?=...)"},{"title":"match/search/findall","desc":"匹配、查找、提取、替换"}],"lang":"python"},{"id":"datetime","title":"日期与时间","summary":"datetime 模块提供 date、time、datetime、timedelta。strftime 把时间转成字符串，strptime 把字符串解析成时间；时间戳用 timestamp/fromtimestamp；跨时区用 zoneinfo。","code":"from datetime import datetime, timedelta\n\nnow = datetime.now()\nprint(now.strftime(\"%Y-%m-%d %H:%M:%S\"))\nprint((now + timedelta(days=7)).date())\nd = datetime.strptime(\"2026-10-28\", \"%Y-%m-%d\")\nprint(d.year, d.month, d.day)","output":"2026-10-28 21:00:00\n2026-11-04\n2026 10 28","tip":"strftime = string format time（时间转字符串），strptime = string parse time（字符串转时间）；naive 时间不要直接跨时区运算。","leaves":[{"title":"date/time/datetime","desc":"日期、时间、日期时间"},{"title":"timedelta","desc":"时间差与日期加减"},{"title":"strftime/strptime","desc":"格式化与解析"},{"title":"时区","desc":"zoneinfo / UTC 优先"}],"lang":"python"},{"id":"math","title":"数学与随机","summary":"math 提供 sqrt、ceil、floor、gcd、isclose 等；random 提供随机数、选择、打乱；statistics 提供均值、中位数、众数、标准差。浮点比较用 math.isclose。","code":"import math, random, statistics\n\nprint(math.sqrt(16), math.ceil(3.2), math.gcd(12, 18))\nrandom.seed(42)\nprint(random.randint(1, 10), random.choice([\"A\", \"B\", \"C\"]))\nprint(statistics.mean([80, 90, 100]), statistics.median([1, 3, 2]))","output":"4.0 4 6\n2 A\n90 2","tip":"random 不是加密安全，令牌/密码用 secrets；random.seed 只用于可复现实验，不要用于安全场景。","leaves":[{"title":"math","desc":"sqrt / ceil / floor / gcd"},{"title":"random","desc":"randint / choice / sample / shuffle"},{"title":"statistics","desc":"mean / median / stdev"},{"title":"decimal/fractions","desc":"精确小数与分数"}],"lang":"python"},{"id":"collections","title":"容器工具 collections","summary":"Counter 计数、defaultdict 带默认值的字典、deque 双端队列、namedtuple 带字段名的元组。它们能显著减少样板代码，是标准库中的高频工具。","code":"from collections import Counter, defaultdict, deque, namedtuple\n\nwords = [\"apple\", \"banana\", \"apple\"]\nprint(Counter(words).most_common(1))\ndd = defaultdict(list)\ndd[\"fruits\"].append(\"apple\")\nprint(dd)\nprint(deque([1, 2, 3]).popleft())","output":"[('apple', 2)]\ndefaultdict(<class 'list'>, {'fruits': ['apple']})\n1","tip":"defaultdict 访问不存在的键会自动创建默认值，可能掩盖拼写错误；需要严格性时仍用普通 dict。","leaves":[{"title":"Counter","desc":"计数与 most_common"},{"title":"defaultdict","desc":"缺失键自动初始化"},{"title":"deque","desc":"两端 O(1) 的队列"},{"title":"namedtuple","desc":"带字段名的轻量记录"}],"lang":"python"},{"id":"itertools","title":"迭代工具 itertools","summary":"itertools 提供无限迭代器（count/cycle/repeat）、组合工具（product/permutations/combinations）、拼接工具（chain）等，全部惰性求值，适合流式处理。","code":"from itertools import chain, combinations, product\n\nprint(list(chain([1, 2], [3, 4])))\nprint(list(combinations([1, 2, 3], 2)))\nprint(list(product(\"AB\", repeat=2)))","output":"[1, 2, 3, 4]\n[(1, 2), (1, 3), (2, 3)]\n[('A', 'A'), ('A', 'B'), ('B', 'A'), ('B', 'B')]","tip":"combinations 不考虑顺序，permutations 考虑顺序；无限迭代器不要直接 list()，会耗尽内存。","leaves":[{"title":"count/cycle/repeat","desc":"无限/循环/重复"},{"title":"chain","desc":"拼接多个可迭代对象"},{"title":"product","desc":"笛卡尔积"},{"title":"combinations/permutations","desc":"组合 / 排列"}],"lang":"python"},{"id":"functools","title":"函数工具 functools","summary":"functools 提供 partial 固定参数、reduce 归约、lru_cache 缓存、wraps 保留元信息、total_ordering 补全比较方法。它们常与装饰器、函数式风格搭配。","code":"from functools import lru_cache\n\n@lru_cache(maxsize=None)\ndef fib(n):\n    return n if n < 2 else fib(n - 1) + fib(n - 2)\n\nprint(fib(30))\nprint(fib.cache_info())","output":"832040\nCacheInfo(hits=28, misses=31, maxsize=None, currsize=31)","tip":"lru_cache 的参数必须可哈希；缓存会持有对象引用，内存敏感场景设 maxsize。","leaves":[{"title":"partial","desc":"固定部分参数"},{"title":"reduce","desc":"累积归约为一个值"},{"title":"lru_cache","desc":"缓存重复计算"},{"title":"wraps","desc":"装饰器保留元信息"}],"lang":"python"},{"id":"hashlib","title":"哈希与编码","summary":"hashlib 提供 MD5、SHA-1、SHA-256 等哈希算法，输出十六进制摘要；哈希不可逆，适合校验完整性，不适合直接存密码。密码用 bcrypt/argon2 加盐；安全随机用 secrets。","code":"import hashlib, secrets\n\ntext = \"hello\"\nprint(hashlib.sha256(text.encode()).hexdigest())\nprint(secrets.token_hex(8))","output":"2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824\n（16 位随机十六进制）","tip":"MD5/SHA-1 已不适合安全场景；密码不要直接哈希，使用专门的密码哈希算法并加盐。","leaves":[{"title":"md5/sha256","desc":"摘要算法与 hexdigest"},{"title":"hexdigest","desc":"十六进制字符串结果"},{"title":"secrets","desc":"密码学安全的随机数"},{"title":"base64","desc":"编码而非加密"}],"lang":"python"},{"id":"logging2","title":"日志 logging","summary":"日志级别从低到高：DEBUG、INFO、WARNING、ERROR、CRITICAL。basicConfig 适合脚本入口；正式项目用 Logger + Handler + Formatter，按文件大小或时间轮转。","code":"import logging\n\nlogging.basicConfig(\n    level=logging.DEBUG,\n    format=\"%(asctime)s [%(levelname)s] %(message)s\",\n    filename=\"app.log\",\n    encoding=\"utf-8\"\n)\nlogging.debug(\"调试信息\")\nlogging.info(\"普通信息\")\nlogging.warning(\"警告\")","output":"（日志写入 app.log）","tip":"库代码不要调用 basicConfig，交给应用入口配置；日志文件要设置 encoding，避免中文乱码。","leaves":[{"title":"basicConfig","desc":"快速配置根日志器"},{"title":"Logger","desc":"按模块命名，层级继承"},{"title":"Handler","desc":"控制台/文件/网络输出"},{"title":"轮转日志","desc":"RotatingFileHandler / TimedRotating"}],"lang":"python"},{"id":"sysos","title":"系统与进程","summary":"sys 处理解释器相关（argv、path、version、exit），os 处理操作系统相关（环境变量、目录、进程），subprocess 启动外部程序，queue 提供线程/进程安全队列。","code":"import sys, os\n\nprint(sys.version_info[:2])\nprint(os.name)\nprint(os.getcwd())\nprint(os.environ.get(\"PATH\", \"\")[:40])","output":"(3, 14)\nnt\nD:\\project\nC:\\Windows\\system32;...","tip":"路径操作用 pathlib；执行外部命令用 subprocess 参数列表；不要用 os.system 拼接用户输入。","leaves":[{"title":"sys","desc":"argv / path / version / exit"},{"title":"os","desc":"环境变量 / 目录 / 进程"},{"title":"subprocess","desc":"run / Popen / 超时"},{"title":"queue","desc":"线程/进程安全队列"}],"lang":"python"},{"id":"datafmt","title":"数据格式与 SQLite","summary":"JSON、CSV、XML 是常见数据交换格式；sqlite3 是内置的轻量数据库，适合本地工具和小型应用。SQL 参数用 ? 占位，避免字符串拼接导致注入。","code":"import sqlite3\n\nconn = sqlite3.connect(\":memory:\")\ncur = conn.cursor()\ncur.execute(\"CREATE TABLE user (name TEXT, score INT)\")\ncur.execute(\"INSERT INTO user VALUES (?, ?)\", (\"小明\", 90))\nconn.commit()\nprint(cur.execute(\"SELECT * FROM user\").fetchall())\nconn.close()","output":"[('小明', 90)]","tip":"sqlite3 默认开启事务，写操作后要 commit；生产数据库用连接池/ORM，不要每次请求新建连接。","leaves":[{"title":"JSON","desc":"dumps/loads，跨语言"},{"title":"CSV","desc":"表格数据，注意 newline"},{"title":"XML","desc":"ElementTree 解析"},{"title":"sqlite3","desc":"内置数据库，参数化查询"}],"lang":"python"}]},{"id":"concurrent","num":"12","title":"并发与网络","subtitle":"多线程、多进程、异步与 HTTP","icon":"network","color":"#DC2626","tint":"#FDECEC","topics":[{"id":"concurrency","title":"并发基础","summary":"并发是“同时处理多件事”，并行是“同时执行多件事”。IO 密集型（网络、文件）适合线程/异步，CPU 密集型（计算）适合多进程。GIL 让同一进程内同一时刻只有一个线程执行 Python 字节码。","code":"import time\n\ndef io_task():\n    time.sleep(0.1)\n\nstart = time.perf_counter()\nfor _ in range(3):\n    io_task()\nprint(f\"串行耗时约 {time.perf_counter()-start:.2f}s\")","output":"串行耗时约 0.30s","tip":"不要一上来就多线程；先测量瓶颈。IO 密集用线程/异步，CPU 密集用多进程或换 C 扩展。","leaves":[{"title":"并发 vs 并行","desc":"交替推进 vs 真正同时"},{"title":"CPU/IO 密集","desc":"计算型 vs 等待型"},{"title":"GIL","desc":"同一进程内线程不能并行执行字节码"},{"title":"选型决策","desc":"线程/进程/异步三选一"}],"lang":"python"},{"id":"thread","title":"多线程 threading","summary":"Thread 创建线程，start 启动，join 等待结束。共享可变状态要加 Lock，避免竞态条件；线程池 ThreadPoolExecutor 更适合批量任务。","code":"import threading\n\ncounter = 0\nlock = threading.Lock()\n\ndef worker():\n    global counter\n    for _ in range(100000):\n        with lock:\n            counter += 1\n\nthreads = [threading.Thread(target=worker) for _ in range(2)]\nfor t in threads: t.start()\nfor t in threads: t.join()\nprint(counter)","output":"200000","tip":"锁的范围尽量小，但必须覆盖完整的读-改-写；多个锁要注意固定顺序，避免死锁。","leaves":[{"title":"Thread","desc":"创建与启动线程"},{"title":"start/join","desc":"启动 / 等待结束"},{"title":"Lock","desc":"互斥锁，保护临界区"},{"title":"线程池","desc":"ThreadPoolExecutor 批量任务"}],"lang":"python"},{"id":"process","title":"多进程 multiprocessing","summary":"Process 创建子进程，Pool 管理进程池；进程间内存隔离，通信用 Queue/Pipe。Windows 上创建进程会重新导入主模块，入口必须放在 if __name__ == \"__main__\" 下。","code":"from multiprocessing import Process, Queue\n\ndef square(q, n):\n    q.put(n * n)\n\nif __name__ == \"__main__\":\n    q = Queue()\n    p = Process(target=square, args=(q, 5))\n    p.start()\n    print(q.get())\n    p.join()","output":"25","tip":"进程比线程重，创建/通信成本高；小任务不要开大量进程。Windows 忘记入口保护会无限递归创建进程。","leaves":[{"title":"Process","desc":"创建子进程"},{"title":"Pool","desc":"进程池 map/apply"},{"title":"Queue/Pipe","desc":"进程间通信"},{"title":"Windows 保护","desc":"if __name__ == \"__main__\""}],"lang":"python"},{"id":"asyncio","title":"异步 asyncio","summary":"asyncio 用事件循环在单线程内并发处理大量 IO：async def 定义协程，await 挂起等待，create_task 并发调度，gather 收集结果。适合高并发网络请求，不适合 CPU 密集计算。","code":"import asyncio\n\nasync def fetch(name, delay):\n    await asyncio.sleep(delay)\n    return f\"{name} 完成\"\n\nasync def main():\n    results = await asyncio.gather(\n        fetch(\"A\", 0.2), fetch(\"B\", 0.1)\n    )\n    print(results)\n\nasyncio.run(main())","output":"['A 完成', 'B 完成']","tip":"async 函数调用后返回协程，必须 await 或交给事件循环；协程里不要写 time.sleep 等阻塞调用。","leaves":[{"title":"事件循环","desc":"调度协程的核心"},{"title":"async/await","desc":"定义与等待协程"},{"title":"create_task/gather","desc":"并发调度与收集结果"},{"title":"异步 IO","desc":"高并发网络/文件场景"}],"lang":"python"},{"id":"socket","title":"Socket 网络编程","summary":"Socket 是网络通信的端点。TCP 提供可靠字节流，UDP 提供无连接数据报。服务端 bind/listen/accept，客户端 connect/send/recv；TCP 是流，应用层要自己定义消息边界。","code":"# 服务端：python server.py\nimport socket\n\nserver = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\nserver.bind((\"127.0.0.1\", 9000))\nserver.listen()\nconn, addr = server.accept()\nprint(\"来自\", addr, conn.recv(1024).decode())\nconn.sendall(\"你好，客户端\".encode())\nconn.close()\nserver.close()","output":"来自 ('127.0.0.1', 54321) 你好","tip":"网络数据是字节，收发要 encode/decode；TCP 没有消息边界，需要长度前缀或分隔符处理粘包。","leaves":[{"title":"TCP","desc":"面向连接、可靠、字节流"},{"title":"UDP","desc":"无连接、数据报、不保证顺序"},{"title":"server/client","desc":"bind/listen/accept/connect"},{"title":"粘包","desc":"应用层定义消息边界"}],"lang":"python"},{"id":"requests","title":"HTTP 与 requests","summary":"requests 让 HTTP 请求变得简单：get/post 发请求，params/headers 传参数与头，json 解析响应，timeout 防止卡死，Session 复用连接。先检查状态码，再解析内容。","code":"import requests\n\nresp = requests.get(\n    \"https://httpbin.org/get\",\n    params={\"q\": \"python\"},\n    timeout=5\n)\nprint(resp.status_code)\nprint(resp.json()[\"args\"])","output":"200\n{'q': 'python'}","tip":"一定要设置 timeout；4xx/5xx 不会自动抛异常，用 raise_for_status() 或检查 status_code；爬虫要遵守 robots 和网站条款。","leaves":[{"title":"GET/POST","desc":"查询与提交数据"},{"title":"params/headers","desc":"URL 参数与请求头"},{"title":"json","desc":"响应解析与发送 JSON"},{"title":"timeout/Session","desc":"超时与连接复用"}],"lang":"python"},{"id":"db","title":"数据库编程","summary":"sqlite3 内置、零配置，适合本地工具；MySQL 常用 PyMySQL 或 mysql-connector；MongoDB 用 pymongo。核心流程都是 connect -> cursor -> execute -> fetch -> commit/close，参数化查询防注入。","code":"import sqlite3\n\nwith sqlite3.connect(\"demo.db\") as conn:\n    cur = conn.cursor()\n    cur.execute(\"CREATE TABLE IF NOT EXISTS user (id INTEGER PRIMARY KEY, name TEXT)\")\n    cur.execute(\"INSERT INTO user (name) VALUES (?)\", (\"小明\",))\n    rows = cur.execute(\"SELECT id, name FROM user\").fetchall()\n    print(rows)","output":"[(1, '小明')]","tip":"不要用 f-string 拼 SQL；生产环境用连接池/ORM，并处理事务、超时、重连。","leaves":[{"title":"sqlite3","desc":"内置、文件型、零配置"},{"title":"PyMySQL","desc":"纯 Python MySQL 驱动"},{"title":"mysql-connector","desc":"Oracle 官方驱动"},{"title":"MongoDB","desc":"文档数据库 pymongo"}],"lang":"python"},{"id":"email","title":"邮件与 urllib","summary":"smtplib 负责发送邮件，email 构造主题、正文、附件；urllib 是标准库的 HTTP 客户端，适合不想装第三方包的小脚本。SMTP 登录通常使用授权码而非邮箱密码。","code":"import smtplib\nfrom email.message import EmailMessage\n\nmsg = EmailMessage()\nmsg[\"Subject\"] = \"测试邮件\"\nmsg[\"From\"] = \"me@example.com\"\nmsg[\"To\"] = \"you@example.com\"\nmsg.set_content(\"这是一封测试邮件。\")\n\n# with smtplib.SMTP_SSL(\"smtp.example.com\", 465) as smtp:\n#     smtp.login(\"me@example.com\", \"授权码\")\n#     smtp.send_message(msg)\nprint(\"邮件对象已创建\")","output":"邮件对象已创建","tip":"不要把邮箱密码/授权码写进代码；用环境变量或密钥管理服务，发送前先小范围测试。","leaves":[{"title":"smtplib","desc":"SMTP 发送与登录"},{"title":"EmailMessage","desc":"主题/正文/附件"},{"title":"附件","desc":"add_attachment + MIME"},{"title":"urllib","desc":"标准库 HTTP 客户端"}],"lang":"python"}]},{"id":"ecosystem","num":"13","title":"实战生态","subtitle":"爬虫、Web、数据、GUI 与 AI","icon":"compass","color":"#CA8A04","tint":"#FBF6E3","topics":[{"id":"spider","title":"爬虫","summary":"爬虫的基本流程：请求页面 -> 解析 HTML -> 提取数据 -> 存储。requests 发请求，BeautifulSoup 解析，Scrapy 适合大型项目，Selenium/Playwright 处理动态页面。合规与限速比技术更重要。","code":"import requests\nfrom bs4 import BeautifulSoup\n\nhtml = \"<h1>标题<\/h1><a href='/python'>Python<\/a>\"\nsoup = BeautifulSoup(html, \"html.parser\")\nprint(soup.h1.text, soup.a[\"href\"])\n# resp = requests.get(url, timeout=5, headers={\"User-Agent\": \"...\"})","output":"标题 /python","tip":"遵守 robots.txt、网站条款与版权；控制频率、加超时/重试；不要爬取隐私数据，优先使用官方 API。","leaves":[{"title":"requests + BeautifulSoup","desc":"请求 + 解析"},{"title":"CSS 选择器","desc":"select / select_one"},{"title":"分页/限速","desc":"翻页、sleep、重试"},{"title":"Scrapy","desc":"工程化爬虫框架"},{"title":"Selenium/Playwright","desc":"浏览器自动化，处理动态页"}],"lang":"python"},{"id":"web","title":"Web 开发","summary":"Flask 轻量灵活，Django 全家桶，FastAPI 类型友好且自动生成文档。开发服务器不能直接上生产，通常用 Gunicorn/uWSGI + Nginx。CGI 是历史方案，了解即可。","code":"# Flask 最小应用\nfrom flask import Flask\n\napp = Flask(__name__)\n\n@app.get(\"/\")\ndef index():\n    return {\"message\": \"Hello, Flask!\"}\n\n# 运行：flask --app app run --debug","output":"{\"message\": \"Hello, Flask!\"}","tip":"生产环境关闭 debug；密钥、数据库密码放环境变量；接口要做输入校验和错误处理。","leaves":[{"title":"Flask","desc":"轻量、路由、模板"},{"title":"Django","desc":"ORM/Admin/认证全家桶"},{"title":"FastAPI","desc":"类型注解 + 自动文档"},{"title":"部署","desc":"Gunicorn/uWSGI + Nginx"},{"title":"CGI（历史）","desc":"了解概念即可，已被 WSGI 取代"}],"lang":"python"},{"id":"data","title":"数据分析与可视化","summary":"NumPy 提供高效数组，Pandas 提供表格数据分析，Matplotlib 基础绘图，pyecharts 生成交互式图表。学习顺序：先会读数据、清洗、聚合，再谈可视化。","code":"import pandas as pd\n\ndf = pd.DataFrame({\n    \"name\": [\"小明\", \"小红\", \"小刚\"],\n    \"score\": [90, 95, 80],\n})\nprint(df[\"score\"].mean())\nprint(df.sort_values(\"score\", ascending=False))","output":"88.33333333333333\n   name  score\n1  小红     95\n0  小明     90\n2  小刚     80","tip":"Pandas 的索引对齐和链式赋值容易踩坑；先看 shape/dtypes/缺失值，再做分析。","leaves":[{"title":"NumPy","desc":"ndarray 与向量化运算"},{"title":"Pandas","desc":"DataFrame 清洗/聚合"},{"title":"Matplotlib","desc":"基础图表"},{"title":"pyecharts","desc":"交互式可视化"}],"lang":"python"},{"id":"gui","title":"GUI 与自动化","summary":"tkinter 是标准库自带的 GUI 工具，适合小工具；PyQt/PySide 适合复杂桌面应用。自动化脚本可以整理文件、处理 Excel、发邮件、定时任务，关键是做好备份和日志。","code":"import tkinter as tk\n\nroot = tk.Tk()\nroot.title(\"第一个窗口\")\ntk.Label(root, text=\"你好，Python！\").pack(pady=20)\ntk.Button(root, text=\"关闭\", command=root.destroy).pack()\nroot.mainloop()","output":"（弹出一个带标签和按钮的窗口）","tip":"GUI 程序要处理主线程/事件循环；自动化操作文件前先备份，批量修改先 dry-run。","leaves":[{"title":"tkinter","desc":"标准库 GUI，快速做小工具"},{"title":"PyQt/PySide","desc":"复杂桌面应用"},{"title":"办公自动化","desc":"Excel/Word/PDF/邮件"},{"title":"定时任务","desc":"schedule / 系统计划任务"}],"lang":"python"},{"id":"ai","title":"AI 与数据科学","summary":"Python 是 AI 生态的默认语言：scikit-learn 做传统机器学习，PyTorch 做深度学习，OpenAI SDK 调用大模型，AI 绘画用扩散模型。先把 Python 和数据处理学好，再进入模型。","code":"# 伪代码：调用大模型 API（需安装 openai 并配置密钥）\nfrom openai import OpenAI\n\nclient = OpenAI(api_key=\"你的密钥\")\nresp = client.chat.completions.create(\n    model=\"gpt-4o-mini\",\n    messages=[{\"role\": \"user\", \"content\": \"用一句话解释 Python\"}],\n)\nprint(resp.choices[0].message.content)","output":"Python 是一门简洁、易读、生态强大的编程语言。","tip":"密钥放环境变量，不要提交到 Git；大模型输出需要人工校验，不要直接用于高风险决策。","leaves":[{"title":"OpenAI API","desc":"Chat Completions / 流式输出"},{"title":"scikit-learn","desc":"分类/回归/聚类"},{"title":"PyTorch","desc":"张量、自动求导、神经网络"},{"title":"AI 绘画","desc":"扩散模型与提示词"}],"lang":"python"},{"id":"quant","title":"量化与金融数据","summary":"量化交易用程序做数据获取、因子计算、策略回测和风险控制。Python 生态有 pandas、NumPy、backtrader 等。入门先学术语和数据清洗，不要直接实盘。","code":"import pandas as pd\n\nprices = pd.Series([10.0, 10.5, 10.2, 11.0])\nreturns = prices.pct_change().dropna()\nprint(returns.round(4).tolist())","output":"[0.05, -0.0286, 0.0784]","tip":"回测不等于实盘：注意未来函数、滑点、手续费、幸存者偏差；任何策略都要先做风险控制。","leaves":[{"title":"量化数据","desc":"行情、财务、因子"},{"title":"策略回测","desc":"收益/回撤/夏普"},{"title":"风险控制","desc":"仓位、止损、分散"},{"title":"pandas","desc":"时间序列与统计"}],"lang":"python"},{"id":"projects","title":"新手项目清单","summary":"按难度递进做项目：计算器、待办清单、通讯录、天气查询、网页爬虫、数据分析报告、Flask 博客、自动化办公。每完成一个就写 README，记录问题与解决方案。","code":"projects = [\n    (\"计算器\", \"函数 + 条件\"),\n    (\"待办清单\", \"列表 + 文件\"),\n    (\"通讯录\", \"字典 + JSON\"),\n    (\"天气查询\", \"requests + API\"),\n]\nfor name, skill in projects:\n    print(f\"{name:6} -> {skill}\")","output":"计算器    -> 函数 + 条件\n待办清单  -> 列表 + 文件\n通讯录    -> 字典 + JSON\n天气查询  -> requests + API","tip":"项目不要追求“大而全”，先做能跑通的最小版本，再迭代；遇到问题先最小复现，再搜索。","leaves":[{"title":"计算器","desc":"函数、条件、异常"},{"title":"待办清单","desc":"列表、文件、增删改查"},{"title":"通讯录","desc":"字典、JSON、持久化"},{"title":"天气查询","desc":"requests、API、JSON"}],"lang":"python"},{"id":"resources","title":"学习资源与方法","summary":"官方文档是最准的参考，PEP 8 是风格标准，Real Python/菜鸟教程适合入门，刷题和项目适合巩固。学会读报错、读源码、写笔记，比收藏一堆链接更重要。","code":"resources = {\n    \"官方文档\": \"docs.python.org/zh-cn/3/\",\n    \"PEP 8\": \"peps.python.org/pep-0008/\",\n    \"菜鸟教程\": \"runoob.com/python3/\",\n}\nfor name, url in resources.items():\n    print(f\"{name}: {url}\")","output":"官方文档: docs.python.org/zh-cn/3/\nPEP 8: peps.python.org/pep-0008/\n菜鸟教程: runoob.com/python3/","tip":"不要只看视频不动手；每学一个知识点，写一个 10 行以内的小例子，并尝试改坏它、修好它。","leaves":[{"title":"官方文档","desc":"最权威、最新"},{"title":"PEP 8","desc":"代码风格标准"},{"title":"Real Python","desc":"高质量实战教程"},{"title":"Markdown 转 HTML","desc":"markdown 库把文档转成网页"},{"title":"刷题/社区","desc":"LeetCode、Stack Overflow"}],"lang":"python"}]}],"coverage":[{"name":"基础教程 · 40 章","chapters":["Python3 教程","Python3 简介","Python3 环境搭建","Python3 PyCharm","Python3 VSCode","Python3 基础语法","Python3 基本数据类型","Python3 数据类型转换","Python3 解释器","Python3 注释","Python3 运算符","Python3 数字(Number)","Python3 字符串","Python3 列表","Python3 元组","Python3 字典","Python3 集合","Python3 条件控制","Python3 循环语句","Python3 编程第一步","Python3 推导式","Python3 迭代器与生成器","Python3 with","Python3 函数","Python3 lambda","Python3 装饰器","Python3 数据结构","Python3 模块","Python __name__","Python3 输入和输出","Python3 File","Python3 OS","Python3 错误和异常","Python3 面向对象","Python3 命名空间/作用域","Python 虚拟环境的创建","Python 类型注解","Python3 标准库概览","Python3 实例","Python 测验"]},{"name":"高级教程 · 42 章","chapters":["Python3 正则表达式","Python3 CGI 编程","Python3 MySQL(mysql-connector)","Python3 MySQL(PyMySQL)","Python3 网络编程","Python3 SMTP 发送邮件","Python3 多线程","Python3 XML 解析","Python3 JSON","Python3 日期和时间","Python3 内置函数","Python3 MongoDB","Python3 urllib","Python uWSGI 安装配置","Python3 pip","Python3 operator","Python math","Python requests","Python random","Python OpenAI","Python 有用的资源","Python AI 绘画","Python statistics","Python hashlib","Python 量化","Python pyecharts","Python selenium 库","Python 爬虫 – BeautifulSoup","Python Scrapy 库","Python Markdown","Python sys 模块","Python Pickle 模块","Python subprocess 模块","Python queue 模块","Python StringIO 模块","Python logging 模块","Python datetime 模块","Python re 模块","Python csv 模块","Python threading 模块","Python asyncio 模块","Python PyQt"]}],"stats":{"branches":13,"topics":95,"leaves":383,"examples":95}};
+</script>
+<script>
+(() => {
+  "use strict";
+
+  const DATA = window.__DATA__;
+  const BRANCHES = DATA.branches;
+  const $ = (sel, root = document) => root.querySelector(sel);
+  const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const escapeHTML = (s) =>
+    String(s)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+
+  const KEYWORDS = new Set(
+    "False None True and as assert async await break class continue def del elif else except finally for from global if import in is lambda nonlocal not or pass raise return try while with yield match case".split(
+      " "
+    )
+  );
+  const BUILTINS = new Set(
+    "abs all any bin bool bytes callable chr dict dir divmod enumerate eval exec filter float format frozenset getattr globals hasattr hash help hex id input int isinstance issubclass iter len list locals map max memoryview min next object oct open ord pow print property range repr reversed round set setattr slice sorted str sum super tuple type vars zip".split(
+      " "
+    )
+  );
+
+  const ICONS = {
+    rocket:
+      '<path d="M14.5 4.5c2.5 1 4 3.2 4 6.2 0 3.8-3.4 7.1-7 8.8-3.6-1.7-7-5-7-8.8 0-3 1.5-5.2 4-6.2"/><path d="M9 15l-3 3M15 15l3 3M12 8v4"/><circle cx="12" cy="6.2" r="1.6"/>',
+    code:
+      '<path d="m8 6-5 6 5 6M16 6l5 6-5 6M14 4l-4 16"/>',
+    branch:
+      '<circle cx="6" cy="5" r="2"/><circle cx="18" cy="7" r="2"/><circle cx="18" cy="17" r="2"/><circle cx="6" cy="19" r="2"/><path d="M8 5h3a3 3 0 0 1 3 3v6a3 3 0 0 0 3 3h1M8 19h3a3 3 0 0 0 3-3V9a3 3 0 0 1 3-2h1"/>',
+    boxes:
+      '<rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/>',
+    function:
+      '<path d="M5 20c3.2 0 4-3.2 4.6-7.2C10.2 8.6 11 4 14 4c1 0 1.8.4 2.4 1"/><path d="M6 11h8"/><path d="M14 20c3 0 3.7-2.2 4.4-6"/>',
+    cube:
+      '<path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z"/><path d="m4 7.5 8 4.5 8-4.5M12 12v9"/>',
+    shield:
+      '<path d="M12 3 20 6v6c0 5-3.4 8-8 9-4.6-1-8-4-8-9V6l8-3Z"/><path d="m9 12 2 2 4-5"/>',
+    folder:
+      '<path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z"/><path d="M3 10h18"/>',
+    sparkles:
+      '<path d="m12 3 1.6 4.4L18 9l-4.4 1.6L12 15l-1.6-4.4L6 9l4.4-1.6L12 3Z"/><path d="m19 15 .8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15Z"/><path d="m5 14 .6 1.4L7 16l-1.4.6L5 18l-.6-1.4L3 16l1.4-.6L5 14Z"/>',
+    package:
+      '<path d="M21 8 12 3 3 8v8l9 5 9-5V8Z"/><path d="m3 8 9 5 9-5M12 13v8"/><path d="m7.5 5.5 9 5"/>',
+    library:
+      '<path d="M4 19V5a2 2 0 0 1 2-2h3v16H6a2 2 0 0 1-2 2Z"/><path d="M9 3h4v16H9z"/><path d="m14 4 4 1-3 15-4-1 3-15Z"/>',
+    network:
+      '<circle cx="12" cy="5" r="2.2"/><circle cx="5" cy="18" r="2.2"/><circle cx="19" cy="18" r="2.2"/><path d="M12 7.2v4.3M6.6 16.2l3.5-3.4M17.4 16.2l-3.5-3.4"/>',
+    compass:
+      '<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2.2 5.1-5.1 2.2 2.2-5.1 5.1-2.2Z"/>',
+    search:
+      '<circle cx="11" cy="11" r="7"/><path d="m20 20-3.2-3.2"/>',
+  };
+
+  function icon(name, size = 18) {
+    const body = ICONS[name] || ICONS.code;
+    return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${body}</svg>`;
+  }
+
+  // ---------- 数据预处理 ----------
+  let leafSeq = 0;
+  BRANCHES.forEach((b, bi) => {
+    b.type = "branch";
+    b.index = bi;
+    b.side = bi < 7 ? 1 : -1;
+    b.leafCount = b.topics.reduce((n, t) => n + t.leaves.length, 0);
+    b.nodeCount = b.topics.length + b.leafCount;
+    b.topics.forEach((t) => {
+      t.type = "topic";
+      t.rawId = t.id;
+      t.id = `${b.id}__${t.id}`;
+      t.parent = b;
+      t.branch = b;
+      t.side = b.side;
+      t.color = b.color;
+      t.tint = b.tint;
+      t.leaves.forEach((l, li) => {
+        l.type = "leaf";
+        l.id = `${t.id}__${li}`;
+        l.parent = t;
+        l.branch = b;
+        l.topic = t;
+        l.side = b.side;
+        l.color = b.color;
+        l.tint = b.tint;
+        l.seq = leafSeq++;
+      });
+    });
+  });
+
+  const NODE_MAP = new Map();
+  const SEARCH = [];
+  BRANCHES.forEach((b) => {
+    NODE_MAP.set(b.id, b);
+    SEARCH.push({
+      id: b.id,
+      type: "branch",
+      title: b.title,
+      sub: b.subtitle,
+      branch: b,
+      node: b,
+      hay: `${b.title} ${b.subtitle}`.toLowerCase(),
+    });
+    b.topics.forEach((t) => {
+      NODE_MAP.set(t.id, t);
+      SEARCH.push({
+        id: t.id,
+        type: "topic",
+        title: t.title,
+        sub: `${b.title} / ${t.title}`,
+        branch: b,
+        node: t,
+        hay: `${t.title} ${t.summary} ${t.leaves.map((l) => l.title).join(" ")}`.toLowerCase(),
+      });
+      t.leaves.forEach((l) => {
+        NODE_MAP.set(l.id, l);
+        SEARCH.push({
+          id: l.id,
+          type: "leaf",
+          title: l.title,
+          sub: `${b.title} / ${t.title}`,
+          branch: b,
+          node: l,
+          hay: `${l.title} ${l.desc} ${t.title}`.toLowerCase(),
+        });
+      });
+    });
+  });
+
+  const STATS = {
+    branches: BRANCHES.length,
+    topics: BRANCHES.reduce((n, b) => n + b.topics.length, 0),
+    leaves: BRANCHES.reduce((n, b) => n + b.leafCount, 0),
+    examples: BRANCHES.reduce((n, b) => n + b.topics.length, 0),
+  };
+  STATS.nodes = STATS.topics + STATS.leaves;
+
+  const LAYOUT = {
+    branchX: 392,
+    topicX: 838,
+    leafX: 1276,
+    leafRow: 27,
+    topicRow: 43,
+    topicGap: 9,
+    branchH: 46,
+    branchGap: 14,
+  };
+
+  const ROOT = {
+    id: "root",
+    type: "root",
+    title: "Python 3",
+    subtitle: "全景知识地图",
+    color: "#2f6bff",
+    tint: "#eaf0ff",
+  };
+
+  const STORAGE_KEY = "py3-mindmap-mastered-v1";
+  function loadMastered() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return new Set();
+      const arr = JSON.parse(raw);
+      return new Set(Array.isArray(arr) ? arr : []);
+    } catch (e) {
+      return new Set();
+    }
+  }
+
+  const state = {
+    expanded: new Set(),
+    selectedId: null,
+    mastered: loadMastered(),
+    zoom: 1,
+    panX: 0,
+    panY: 0,
+    positions: new Map(),
+    lastVisible: new Set(),
+    viewAnim: 0,
+    searchResults: [],
+    searchActive: 0,
+    searchOpen: false,
+    drag: null,
+  };
+
+  // ---------- DOM ----------
+  const stage = $("#stage");
+  const world = $("#world");
+  const linksSVG = $("#links");
+  const nodesEl = $("#nodes");
+  const rootNode = $("#rootNode");
+  const detail = $("#detail");
+  const detailHead = $("#detailHead");
+  const detailBody = $("#detailBody");
+  const detailFoot = $("#detailFoot");
+  const searchInput = $("#searchInput");
+  const searchResults = $("#searchResults");
+  const sideNav = $("#sideNav");
+  const toastEl = $("#toast");
+  const toastText = $("#toastText");
+  const zoomLabel = $("#zoomLabel");
+  const mapHint = $("#mapHint");
+
+  let toastTimer = 0;
+
+  function toast(msg) {
+    toastText.textContent = msg;
+    toastEl.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toastEl.classList.remove("show"), 2200);
+  }
+
+  // ---------- 可见性与布局 ----------
+  function visibleNodes() {
+    const out = [];
+    BRANCHES.forEach((b) => {
+      out.push(b);
+      if (!state.expanded.has(b.id)) return;
+      b.topics.forEach((t) => {
+        out.push(t);
+        if (!state.expanded.has(t.id)) return;
+        t.leaves.forEach((l) => out.push(l));
+      });
+    });
+    return out;
+  }
+
+  function layoutSide(list, side) {
+    const blocks = list.map((b) => {
+      const topics = state.expanded.has(b.id) ? b.topics : [];
+      const tLayouts = topics.map((t) => {
+        const leaves = state.expanded.has(t.id) ? t.leaves : [];
+        const h = leaves.length ? leaves.length * LAYOUT.leafRow + 10 : LAYOUT.topicRow;
+        return { t, leaves, h };
+      });
+      let inner = 0;
+      tLayouts.forEach((x, i) => {
+        inner += x.h;
+        if (i < tLayouts.length - 1) inner += LAYOUT.topicGap;
+      });
+      const h = topics.length ? Math.max(inner, LAYOUT.branchH) : LAYOUT.branchH;
+      return { b, topics, tLayouts, h, inner };
+    });
+
+    let total = 0;
+    blocks.forEach((x, i) => {
+      total += x.h;
+      if (i < blocks.length - 1) total += LAYOUT.branchGap;
+    });
+
+    let cursor = -total / 2;
+    blocks.forEach((block) => {
+      const by = cursor + block.h / 2;
+      state.positions.set(block.b.id, { x: side * LAYOUT.branchX, y: by });
+
+      if (block.topics.length) {
+        let top = by - block.inner / 2;
+        block.tLayouts.forEach((tl) => {
+          const t = tl.t;
+          if (tl.leaves.length) {
+            const leafTop = top + 5;
+            tl.leaves.forEach((l, i) => {
+              state.positions.set(l.id, {
+                x: side * LAYOUT.leafX,
+                y: leafTop + i * LAYOUT.leafRow + LAYOUT.leafRow / 2,
+              });
+            });
+            const ty = leafTop + (tl.leaves.length * LAYOUT.leafRow) / 2;
+            state.positions.set(t.id, { x: side * LAYOUT.topicX, y: ty });
+          } else {
+            state.positions.set(t.id, {
+              x: side * LAYOUT.topicX,
+              y: top + LAYOUT.topicRow / 2,
+            });
+          }
+          top += tl.h + LAYOUT.topicGap;
+        });
+      }
+      cursor += block.h + LAYOUT.branchGap;
+    });
+  }
+
+  function computeLayout() {
+    state.positions = new Map();
+    state.positions.set("root", { x: 0, y: 0 });
+    const right = BRANCHES.filter((b) => b.side === 1);
+    const left = BRANCHES.filter((b) => b.side === -1);
+    layoutSide(right, 1);
+    layoutSide(left, -1);
+  }
+
+  // ---------- 渲染 ----------
+  function linkPath(x1, y1, x2, y2) {
+    const mid = (x1 + x2) / 2;
+    return `M ${x1} ${y1} C ${mid} ${y1}, ${mid} ${y2}, ${x2} ${y2}`;
+  }
+
+  function renderMap() {
+    computeLayout();
+    const visible = visibleNodes();
+    const visibleSet = new Set(visible.map((n) => n.id));
+
+    // links
+    let paths = "";
+    BRANCHES.forEach((b) => {
+      const bp = state.positions.get(b.id);
+      if (!bp) return;
+      const d = linkPath(0, 0, bp.x, bp.y);
+      paths += `<path d="${d}" stroke="${b.color}" stroke-width="7" opacity=".055" fill="none" stroke-linecap="round" data-branch="${b.id}"></path>`;
+      paths += `<path d="${d}" stroke="${b.color}" class="link branch-link" data-branch="${b.id}"></path>`;
+      if (!state.expanded.has(b.id)) return;
+      b.topics.forEach((t) => {
+        const tp = state.positions.get(t.id);
+        if (!tp) return;
+        paths += `<path d="${linkPath(bp.x, bp.y, tp.x, tp.y)}" stroke="${b.color}" class="link topic-link" data-branch="${b.id}"></path>`;
+        if (!state.expanded.has(t.id)) return;
+        t.leaves.forEach((l) => {
+          const lp = state.positions.get(l.id);
+          if (!lp) return;
+          paths += `<path d="${linkPath(tp.x, tp.y, lp.x, lp.y)}" stroke="${b.color}" class="link leaf-link" data-branch="${b.id}"></path>`;
+        });
+      });
+    });
+    linksSVG.innerHTML = paths;
+
+    // nodes
+    const frag = document.createDocumentFragment();
+    visible.forEach((n) => {
+      const p = state.positions.get(n.id);
+      if (!p) return;
+      const el = document.createElement("div");
+      el.className = `node ${n.type} ${n.side === 1 || n.type === "root" ? "right" : "left"}`;
+      if (state.selectedId === n.id) el.classList.add("selected");
+      if (state.mastered.has(n.id)) el.classList.add("mastered");
+      if (!state.lastVisible.has(n.id)) el.classList.add("new");
+      el.dataset.id = n.id;
+      el.tabIndex = 0;
+      el.style.transform = `translate3d(${p.x}px, ${p.y}px, 0)`;
+      el.style.setProperty("--c", n.color);
+      el.style.setProperty("--tint", n.tint);
+
+      if (n.type === "branch") {
+        const open = state.expanded.has(n.id);
+        el.innerHTML = `
+          <span class="dot"></span>
+          <div class="label">
+            <div class="pill" role="button" aria-label="${escapeHTML(n.title)}，${open ? "收起" : "展开"}">
+              <span class="badge">${n.num}</span>
+              <span class="title">${escapeHTML(n.title)}</span>
+              <span class="chev" data-act="toggle" title="${open ? "收起" : "展开"}">${open ? "−" : "+"}</span>
+            </div>
+          </div>`;
+      } else {
+        el.innerHTML = `<span class="dot"></span><span class="label">${escapeHTML(n.title)}</span>`;
+      }
+      frag.appendChild(el);
+    });
+    nodesEl.innerHTML = "";
+    nodesEl.appendChild(frag);
+
+    // 量取标签宽度，供 fit 使用
+    visible.forEach((n) => {
+      const el = nodesEl.querySelector(`[data-id="${cssEscape(n.id)}"]`);
+      n._el = el;
+      n._w = el ? el.querySelector(".label")?.offsetWidth || 0 : 0;
+    });
+
+    state.lastVisible = visibleSet;
+    updateSelected();
+    applyView();
+  }
+
+  function cssEscape(s) {
+    if (window.CSS && CSS.escape) return CSS.escape(s);
+    return String(s).replace(/[^a-zA-Z0-9_-]/g, "\\$&");
+  }
+
+  function updateSelected() {
+    $$(".node.selected", nodesEl).forEach((el) => el.classList.remove("selected"));
+    if (state.selectedId) {
+      const el = nodesEl.querySelector(`[data-id="${cssEscape(state.selectedId)}"]`);
+      if (el) el.classList.add("selected");
+    }
+    $$(".nav-item", sideNav).forEach((el) => {
+      const b = NODE_MAP.get(el.dataset.branch);
+      el.classList.toggle(
+        "active",
+        !!(b && state.selectedId && (state.selectedId === b.id || state.selectedId.startsWith(b.id + "__") || (NODE_MAP.get(state.selectedId)?.branch?.id === b.id)))
+      );
+    });
+  }
+
+  // ---------- 视图变换 ----------
+  function applyView() {
+    world.style.transform = `translate3d(${state.panX}px, ${state.panY}px, 0) scale(${state.zoom})`;
+    zoomLabel.textContent = Math.round(state.zoom * 100) + "%";
+  }
+
+  function cancelViewAnim() {
+    if (state.viewAnim) cancelAnimationFrame(state.viewAnim);
+    state.viewAnim = 0;
+  }
+
+  function animateView(to, duration = 460) {
+    cancelViewAnim();
+    const from = { zoom: state.zoom, panX: state.panX, panY: state.panY };
+    const t0 = performance.now();
+    const ease = (t) => 1 - Math.pow(1 - t, 3);
+    const step = (now) => {
+      const t = clamp((now - t0) / duration, 0, 1);
+      const k = ease(t);
+      state.zoom = from.zoom + (to.zoom - from.zoom) * k;
+      state.panX = from.panX + (to.panX - from.panX) * k;
+      state.panY = from.panY + (to.panY - from.panY) * k;
+      applyView();
+      if (t < 1) state.viewAnim = requestAnimationFrame(step);
+      else state.viewAnim = 0;
+    };
+    state.viewAnim = requestAnimationFrame(step);
+  }
+
+  function bounds() {
+    let minX = -120,
+      maxX = 120,
+      minY = -120,
+      maxY = 120;
+    const visible = visibleNodes();
+    state.positions.forEach((p, id) => {
+      const n = NODE_MAP.get(id);
+      if (id !== "root" && !visible.some((v) => v.id === id)) return;
+      if (id === "root") {
+        minX = Math.min(minX, -120);
+        maxX = Math.max(maxX, 120);
+        minY = Math.min(minY, -120);
+        maxY = Math.max(maxY, 120);
+        return;
+      }
+      const w = (n && n._w) || 180;
+      const left = n.side === 1 ? p.x - 18 : p.x - w - 18;
+      const right = n.side === 1 ? p.x + w + 18 : p.x + 18;
+      minX = Math.min(minX, left);
+      maxX = Math.max(maxX, right);
+      minY = Math.min(minY, p.y - (n.type === "branch" ? 34 : 20));
+      maxY = Math.max(maxY, p.y + (n.type === "branch" ? 34 : 20));
+    });
+    return { minX, maxX, minY, maxY };
+  }
+
+  function fitView(animate = true) {
+    const W = stage.clientWidth;
+    const H = stage.clientHeight;
+    if (!W || !H) return;
+    const b = bounds();
+    const pad = 62;
+    const z = clamp(
+      Math.min((W - pad * 2) / Math.max(1, b.maxX - b.minX), (H - pad * 2) / Math.max(1, b.maxY - b.minY)),
+      0.1,
+      1.18
+    );
+    const cx = (b.minX + b.maxX) / 2;
+    const cy = (b.minY + b.maxY) / 2;
+    const to = {
+      zoom: z,
+      panX: W / 2 - cx * z,
+      panY: H / 2 - cy * z,
+    };
+    if (animate) animateView(to);
+    else {
+      state.zoom = to.zoom;
+      state.panX = to.panX;
+      state.panY = to.panY;
+      applyView();
+    }
+  }
+
+  function focusNode(node, animate = true) {
+    if (!node) return;
+    const p = state.positions.get(node.id);
+    if (!p) return;
+    const W = stage.clientWidth;
+    const H = stage.clientHeight;
+    const drawerOpen = detail.classList.contains("open") && W > 1024;
+    const tx = W * (drawerOpen ? (node.type === "branch" ? 0.17 : 0.19) : 0.5);
+    const ty = H * 0.5;
+    const z = clamp(Math.max(state.zoom, 0.82), 0.42, 1.15);
+    const to = {
+      zoom: z,
+      panX: tx - p.x * z,
+      panY: ty - p.y * z,
+    };
+    if (animate) animateView(to, 420);
+    else {
+      state.zoom = z;
+      state.panX = to.panX;
+      state.panY = to.panY;
+      applyView();
+    }
+  }
+
+  // ---------- 代码高亮 ----------
+  function highlight(code, lang) {
+    if (!code) return "";
+    if (lang !== "python") {
+      return escapeHTML(code)
+        .split("\n")
+        .map((line) => {
+          const m = line.match(/^(\s*)(#.*)$/);
+          if (m) return `${m[1]}<span class="tok-com">${m[2]}</span>`;
+          return line.replace(/(\s+#.*)$/, ' <span class="tok-com">$1</span>');
+        })
+        .join("\n");
+    }
+    const re =
+      /("""[\s\S]*?"""|'''[\s\S]*?'''|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|#[^\n]*|\b\d+(?:\.\d+)?\b|\b[A-Za-z_]\w*\b)/g;
+    let out = "";
+    let last = 0;
+    let m;
+    while ((m = re.exec(code))) {
+      out += escapeHTML(code.slice(last, m.index));
+      const tok = m[0];
+      let cls = "";
+      if (tok.startsWith("#")) cls = "tok-com";
+      else if (/^["']/.test(tok)) cls = "tok-str";
+      else if (/^\d/.test(tok)) cls = "tok-num";
+      else if (KEYWORDS.has(tok)) cls = "tok-key";
+      else if (BUILTINS.has(tok)) cls = "tok-builtin";
+      else if (tok === "self" || tok === "cls") cls = "tok-self";
+      else {
+        const rest = code.slice(m.index + tok.length);
+        if (/^\s*\(/.test(rest)) cls = "tok-fn";
+      }
+      out += cls ? `<span class="${cls}">${escapeHTML(tok)}</span>` : escapeHTML(tok);
+      last = re.lastIndex;
+    }
+    out += escapeHTML(code.slice(last));
+    return out;
+  }
+
+  function codeCard(code, lang, name) {
+    if (!code) return "";
+    const label = lang === "bash" ? "terminal" : lang === "text" ? "structure.txt" : "example.py";
+    return `
+      <div class="code-card">
+        <div class="code-head">
+          <div class="code-dots"><i></i><i></i><i></i></div>
+          <span class="code-name">${escapeHTML(name || label)}</span>
+          <button class="copy-btn" data-copy="${encodeURIComponent(code)}" title="复制代码">复制</button>
+        </div>
+        <pre><code>${highlight(code, lang)}</code></pre>
+      </div>`;
+  }
+
+  function outputCard(output) {
+    if (!output) return "";
+    return `
+      <div class="output-card">
+        <div class="output-head">OUTPUT · 运行结果</div>
+        <pre>${escapeHTML(output)}</pre>
+      </div>`;
+  }
+
+  function tipCard(tip) {
+    if (!tip) return "";
+    return `
+      <div class="tip">
+        <div class="tip-icon">!</div>
+        <p><b>新手易错点：</b>${escapeHTML(tip)}</p>
+      </div>`;
+  }
+
+  function chips(items, type, branch) {
+    return `<div class="chips">${items
+      .map(
+        (x) =>
+          `<button class="chip" data-goto="${escapeHTML(x.id)}" style="--c:${branch.color}">${escapeHTML(
+            x.title
+          )}</button>`
+      )
+      .join("")}</div>`;
+  }
+
+  // ---------- 详情 ----------
+  function breadcrumb(node) {
+    if (node.type === "root") return "PYTHON 3 · OVERVIEW";
+    if (node.type === "branch") return `${node.num} · ${node.title}`;
+    if (node.type === "topic") return `${node.branch.num} / ${node.branch.title} / ${node.title}`;
+    return `${node.branch.num} / ${node.branch.title} / ${node.topic.title}`;
+  }
+
+  function renderDetail(node) {
+    if (!node) return;
+    const branch = node.type === "branch" ? node : node.branch || BRANCHES[0];
+    const color = branch.color;
+    const tint = branch.tint;
+    detail.style.setProperty("--c", color);
+    detail.style.setProperty("--tint", tint);
+
+    detailHead.innerHTML = `
+      <div class="detail-topline">
+        <span class="detail-kicker">${escapeHTML(breadcrumb(node))}</span>
+        <button class="icon-btn" id="detailClose" aria-label="关闭">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"></path></svg>
+        </button>
+      </div>
+      <div class="detail-titlerow">
+        <div class="detail-icon">${node.type === "root" ? icon("compass", 20) : icon(branch.icon, 20)}</div>
+        <div>
+          <h2>${escapeHTML(node.type === "root" ? "Python 3 全景知识地图" : node.title)}</h2>
+          <p class="detail-sub">${escapeHTML(
+            node.type === "root"
+              ? "从第一行代码到并发、网络与项目实战"
+              : node.type === "branch"
+              ? node.subtitle
+              : node.type === "topic"
+              ? `${branch.title} · ${node.leaves.length} 个知识点`
+              : `${node.topic.title} · 知识点`
+          )}</p>
+        </div>
+      </div>`;
+
+    let body = "";
+    if (node.type === "root") {
+      body = `
+        <p class="summary">这是一张覆盖菜鸟教程 Python3 全部核心章节的交互式知识地图。共 <b>${STATS.branches}</b> 大模块、<b>${STATS.topics}</b> 个主题、<b>${STATS.leaves}</b> 个知识点，每个主题都配有一个新手示例、运行结果和易错点。</p>
+        <div class="detail-section">
+          <h3 class="section-title">怎么使用</h3>
+          <div class="chips">
+            <span class="chip">点击分支展开</span>
+            <span class="chip">点击主题看示例</span>
+            <span class="chip">滚轮缩放 / 拖拽平移</span>
+            <span class="chip">搜索 Ctrl K</span>
+            <span class="chip">标记已掌握</span>
+          </div>
+        </div>
+        <div class="detail-section">
+          <h3 class="section-title">学习顺序</h3>
+          <div class="chips">
+            <button class="chip" data-goto="${BRANCHES[0].id}">01 入门准备</button>
+            <button class="chip" data-goto="${BRANCHES[1].id}">02 语法基石</button>
+            <button class="chip" data-goto="${BRANCHES[2].id}">03 流程控制</button>
+            <button class="chip" data-goto="${BRANCHES[3].id}">04 数据结构</button>
+            <button class="chip" data-goto="${BRANCHES[4].id}">05 函数</button>
+            <button class="chip" data-goto="${BRANCHES[5].id}">06 面向对象</button>
+          </div>
+        </div>
+        <div class="detail-section">
+          <h3 class="section-title">地图统计</h3>
+          <div class="branch-stats">
+            <div><b>${STATS.branches}</b><span>一级模块</span></div>
+            <div><b>${STATS.topics}</b><span>主题</span></div>
+            <div><b>${STATS.leaves}</b><span>知识点</span></div>
+            <div><b>${STATS.examples}</b><span>示例</span></div>
+          </div>
+        </div>`;
+    } else if (node.type === "branch") {
+      const masteredCount = node.topics.reduce(
+        (n, t) => n + (state.mastered.has(t.id) ? 1 : 0) + t.leaves.filter((l) => state.mastered.has(l.id)).length,
+        0
+      );
+      body = `
+        <div class="branch-hero">
+          <div class="big-num">${node.num}</div>
+          <p class="hero-kicker">MODULE ${node.num} · LEARNING PROGRESS</p>
+          <div class="branch-stats">
+            <div><b>${node.topics.length}</b><span>主题</span></div>
+            <div><b>${node.leafCount}</b><span>知识点</span></div>
+            <div><b>${masteredCount}</b><span>已掌握</span></div>
+          </div>
+        </div>
+        <p class="summary">建议按主题顺序学习：先看示例，再自己改 2–3 处，最后不看答案重写一遍。点击下面的主题可直接展开对应知识点。</p>
+        <div class="detail-section">
+          <h3 class="section-title">本模块主题</h3>
+          ${node.topics
+            .map(
+              (t) => `
+            <button class="topic-card" data-goto="${t.id}" style="--c:${node.color}">
+              <h4><i></i>${escapeHTML(t.title)}</h4>
+              <p>${escapeHTML(t.summary)}</p>
+            </button>`
+            )
+            .join("")}
+        </div>`;
+    } else if (node.type === "topic") {
+      body = `
+        <p class="summary">${escapeHTML(node.summary)}</p>
+        <div class="detail-section">
+          <h3 class="section-title">本节知识点</h3>
+          ${chips(node.leaves, "leaf", branch)}
+        </div>
+        <div class="detail-section">
+          <h3 class="section-title">新手示例</h3>
+          ${codeCard(node.code, node.lang, `${node.rawId || node.id}.py`)}
+        </div>
+        ${
+          node.output
+            ? `<div class="detail-section"><h3 class="section-title">运行结果</h3>${outputCard(node.output)}</div>`
+            : ""
+        }
+        ${node.tip ? `<div class="detail-section"><h3 class="section-title">避坑提醒</h3>${tipCard(node.tip)}</div>` : ""}`;
+    } else {
+      const siblings = node.topic.leaves.filter((l) => l.id !== node.id);
+      body = `
+        <p class="summary">${escapeHTML(node.desc)}</p>
+        <div class="detail-section">
+          <h3 class="section-title">所属主题</h3>
+          <button class="topic-card" data-goto="${node.topic.id}" style="--c:${branch.color}">
+            <h4><i></i>${escapeHTML(node.topic.title)}</h4>
+            <p>${escapeHTML(node.topic.summary)}</p>
+          </button>
+        </div>
+        ${
+          siblings.length
+            ? `<div class="detail-section"><h3 class="section-title">同主题知识点</h3>${chips(siblings, "leaf", branch)}</div>`
+            : ""
+        }
+        <div class="detail-section">
+          <h3 class="section-title">结合示例理解</h3>
+          ${codeCard(node.topic.code, node.topic.lang, `${node.topic.rawId || node.topic.id}.py`)}
+        </div>
+        ${
+          node.topic.output
+            ? `<div class="detail-section"><h3 class="section-title">运行结果</h3>${outputCard(node.topic.output)}</div>`
+            : ""
+        }
+        ${node.topic.tip ? `<div class="detail-section"><h3 class="section-title">避坑提醒</h3>${tipCard(node.topic.tip)}</div>` : ""}`;
+    }
+
+    detailBody.innerHTML = body;
+    detailBody.scrollTop = 0;
+
+    if (node.type === "root") {
+      detailFoot.innerHTML = `
+        <button class="btn btn-primary" id="startBtn" style="flex:1.4">
+          <span class="dot"></span>
+          从 01 入门准备开始
+        </button>
+        <button class="btn" id="expandAllBtn">展开全部</button>`;
+      $("#startBtn")?.addEventListener("click", () => {
+        selectNode(BRANCHES[0]);
+      });
+      $("#expandAllBtn")?.addEventListener("click", () => $("#expandBtn").click());
+      return;
+    }
+
+    const isMastered = state.mastered.has(node.id);
+    const isBranch = node.type === "branch";
+    const btnLabel = isBranch
+      ? masteredCountForBranch(node) === node.nodeCount
+        ? "取消本模块掌握"
+        : "标记本模块掌握"
+      : isMastered
+      ? "取消已掌握"
+      : "标记为已掌握";
+    detailFoot.innerHTML = `
+      <button class="btn master-btn ${isMastered || (isBranch && masteredCountForBranch(node) === node.nodeCount) ? "done" : ""}" id="masterBtn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="m5 12 4 4L19 6"></path></svg>
+        ${btnLabel}
+      </button>
+      <button class="btn" id="locateBtn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3"></path></svg>
+        在图中定位
+      </button>`;
+
+    $("#detailClose")?.addEventListener("click", closeDetail);
+    $("#locateBtn")?.addEventListener("click", () => focusNode(node, true));
+    $("#masterBtn")?.addEventListener("click", () => {
+      if (isBranch) toggleBranchMastered(node);
+      else toggleMastered(node.id);
+    });
+  }
+
+  function masteredCountForBranch(branch) {
+    if (!branch || !branch.topics) return 0;
+    let n = 0;
+    branch.topics.forEach((t) => {
+      if (state.mastered.has(t.id)) n++;
+      t.leaves.forEach((l) => {
+        if (state.mastered.has(l.id)) n++;
+      });
+    });
+    return n;
+  }
+
+  function openDetail(node) {
+    state.selectedId = node.id;
+    renderDetail(node);
+    detail.classList.add("open");
+    detail.setAttribute("aria-hidden", "false");
+    updateSelected();
+    updateNav();
+    setTimeout(() => focusNode(node, true), 30);
+  }
+
+  function closeDetail() {
+    detail.classList.remove("open");
+    detail.setAttribute("aria-hidden", "true");
+    state.selectedId = null;
+    updateSelected();
+    updateNav();
+  }
+
+  // ---------- 交互 ----------
+  function collapseOthers(branchId) {
+    const next = new Set();
+    if (branchId) next.add(branchId);
+    state.expanded = next;
+  }
+
+  function selectNode(node, opts = {}) {
+    if (!node) return;
+    if (node.type === "branch") {
+      if (opts.keepExpanded !== true) {
+        collapseOthers(node.id);
+      } else {
+        state.expanded.add(node.id);
+      }
+    } else if (node.type === "topic") {
+      if (opts.keepExpanded !== true) collapseOthers(node.branch.id);
+      else state.expanded.add(node.branch.id);
+      state.expanded.add(node.id);
+    } else if (node.type === "leaf") {
+      if (opts.keepExpanded !== true) collapseOthers(node.branch.id);
+      else state.expanded.add(node.branch.id);
+      state.expanded.add(node.topic.id);
+    }
+    renderMap();
+    openDetail(node);
+  }
+
+  function toggleBranch(branch) {
+    if (state.expanded.has(branch.id)) {
+      state.expanded.delete(branch.id);
+      branch.topics.forEach((t) => state.expanded.delete(t.id));
+    } else {
+      state.expanded.add(branch.id);
+    }
+    renderMap();
+    if (detail.classList.contains("open") && state.selectedId === branch.id) {
+      renderDetail(branch);
+    }
+  }
+
+  // 节点点击
+  nodesEl.addEventListener("click", (e) => {
+    const toggle = e.target.closest('[data-act="toggle"]');
+    const el = e.target.closest(".node");
+    if (!el) return;
+    const node = NODE_MAP.get(el.dataset.id);
+    if (!node) return;
+    if (toggle) {
+      e.stopPropagation();
+      if (node.type === "branch") toggleBranch(node);
+      else if (node.type === "topic") {
+        if (state.expanded.has(node.id)) state.expanded.delete(node.id);
+        else state.expanded.add(node.id);
+        renderMap();
+      }
+      return;
+    }
+    selectNode(node);
+  });
+
+  nodesEl.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    const el = e.target.closest(".node");
+    if (!el) return;
+    e.preventDefault();
+    const node = NODE_MAP.get(el.dataset.id);
+    if (node) selectNode(node);
+  });
+
+  rootNode.addEventListener("click", () => {
+    state.selectedId = "root";
+    renderDetail(ROOT);
+    detail.classList.add("open");
+    updateSelected();
+    fitView(true);
+  });
+  rootNode.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      rootNode.click();
+    }
+  });
+
+  // 折叠/展开全部
+  $("#overviewBtn").addEventListener("click", () => {
+    state.expanded.clear();
+    state.selectedId = null;
+    closeDetail();
+    renderMap();
+    fitView(true);
+    toast("已收起到 13 个一级模块");
+  });
+
+  $("#expandBtn").addEventListener("click", () => {
+    BRANCHES.forEach((b) => {
+      state.expanded.add(b.id);
+      b.topics.forEach((t) => state.expanded.add(t.id));
+    });
+    renderMap();
+    cancelViewAnim();
+    state.zoom = 0.42;
+    state.panX = stage.clientWidth / 2;
+    state.panY = stage.clientHeight / 2;
+    applyView();
+    toast(`已展开 ${STATS.leaves} 个知识点，拖拽平移、滚轮缩放查看`);
+  });
+
+  // 侧边导航
+  function renderNav() {
+    sideNav.innerHTML = BRANCHES.map((b) => {
+      const m = masteredCountForBranch(b);
+      const pct = Math.round((m / b.nodeCount) * 100);
+      return `<button class="nav-item" data-branch="${b.id}" style="--c:${b.color}">
+        <span class="nav-num">${b.num}</span>
+        <span class="nav-main">
+          <span class="nav-title">${escapeHTML(b.title)}</span>
+          <span class="nav-sub">${b.topics.length} 主题 · ${b.leafCount} 点</span>
+        </span>
+        <span class="nav-count">${m}/${b.nodeCount}</span>
+        <span class="nav-bar"><i style="--w:${pct}%"></i></span>
+      </button>`;
+    }).join("");
+    sideNav.querySelectorAll(".nav-item").forEach((el) => {
+      el.addEventListener("click", () => {
+        const b = NODE_MAP.get(el.dataset.branch);
+        if (b) selectNode(b);
+      });
+    });
+    updateNav();
+  }
+
+  function updateNav() {
+    $$(".nav-item", sideNav).forEach((el) => {
+      const b = NODE_MAP.get(el.dataset.branch);
+      const sel = state.selectedId;
+      const active = !!(
+        b &&
+        sel &&
+        (sel === b.id ||
+          (NODE_MAP.get(sel)?.branch && NODE_MAP.get(sel).branch.id === b.id) ||
+          sel.startsWith(b.id + "__"))
+      );
+      el.classList.toggle("active", active);
+      const m = masteredCountForBranch(b);
+      const pct = Math.round((m / b.nodeCount) * 100);
+      const bar = el.querySelector(".nav-bar i");
+      if (bar) bar.style.setProperty("--w", pct + "%");
+      const count = el.querySelector(".nav-count");
+      if (count) count.textContent = `${m}/${b.nodeCount}`;
+    });
+  }
+
+  // 掌握标记
+  function saveMastered() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify([...state.mastered]));
+    } catch (e) {}
+  }
+
+  function updateProgress() {
+    let n = 0;
+    BRANCHES.forEach((b) => {
+      b.topics.forEach((t) => {
+        if (state.mastered.has(t.id)) n++;
+        t.leaves.forEach((l) => {
+          if (state.mastered.has(l.id)) n++;
+        });
+      });
+    });
+    const pct = Math.round((n / STATS.nodes) * 100);
+    const shown = n === 0 ? 0 : Math.max(1, pct);
+    $("#progressRing").style.setProperty("--p", shown);
+    $("#progressText").textContent = shown + "%";
+    const pill = $("#progressRing").closest(".progress-pill");
+    if (pill) pill.title = `已掌握 ${n} / ${STATS.nodes} 个知识点`;
+  }
+
+  function refreshMasteryUI() {
+    saveMastered();
+    updateProgress();
+    updateNav();
+    $$(".node", nodesEl).forEach((el) => {
+      el.classList.toggle("mastered", state.mastered.has(el.dataset.id));
+    });
+    if (state.selectedId) {
+      const node = NODE_MAP.get(state.selectedId) || (state.selectedId === "root" ? ROOT : null);
+      if (node) renderDetail(node);
+    }
+  }
+
+  function toggleMastered(id) {
+    if (state.mastered.has(id)) {
+      state.mastered.delete(id);
+      toast("已取消掌握标记");
+    } else {
+      state.mastered.add(id);
+      toast("已掌握 +1，继续保持");
+    }
+    refreshMasteryUI();
+  }
+
+  function toggleBranchMastered(branch) {
+    const all = [branch, ...branch.topics, ...branch.topics.flatMap((t) => t.leaves)];
+    const done = all.every((n) => state.mastered.has(n.id));
+    if (done) {
+      all.forEach((n) => state.mastered.delete(n.id));
+      toast(`已取消「${branch.title}」的掌握标记`);
+    } else {
+      all.forEach((n) => state.mastered.add(n.id));
+      toast(`已标记「${branch.title}」全部掌握`);
+    }
+    refreshMasteryUI();
+  }
+
+  // 详情内跳转 & 复制
+  detailBody.addEventListener("click", (e) => {
+    const copy = e.target.closest("[data-copy]");
+    if (copy) {
+      const code = decodeURIComponent(copy.dataset.copy);
+      navigator.clipboard?.writeText(code).then(
+        () => {
+          copy.textContent = "已复制";
+          setTimeout(() => (copy.textContent = "复制"), 1200);
+        },
+        () => toast("复制失败，请手动选择代码")
+      );
+      return;
+    }
+    const go = e.target.closest("[data-goto]");
+    if (go) {
+      const node = NODE_MAP.get(go.dataset.goto);
+      if (node) selectNode(node);
+    }
+  });
+
+  // 搜索
+  function search(query) {
+    const q = query.trim().toLowerCase();
+    if (!q) return [];
+    const hits = SEARCH.filter((x) => x.hay.includes(q));
+    const typeOrder = { branch: 0, topic: 1, leaf: 2 };
+    hits.sort((a, b) => {
+      const ai = a.title.toLowerCase().indexOf(q);
+      const bi = b.title.toLowerCase().indexOf(q);
+      const as = ai === 0 ? 0 : ai > 0 ? 1 : 2;
+      const bs = bi === 0 ? 0 : bi > 0 ? 1 : 2;
+      if (as !== bs) return as - bs;
+      if (typeOrder[a.type] !== typeOrder[b.type]) return typeOrder[a.type] - typeOrder[b.type];
+      return a.title.length - b.title.length;
+    });
+    return hits.slice(0, 16);
+  }
+
+  function renderSearchResults(list, q) {
+    if (!list.length) {
+      searchResults.innerHTML = `<div class="search-empty">没有找到「${escapeHTML(
+        q
+      )}」<br><span style="font-size:10px;color:#98a1b0">试试：列表、装饰器、异常、asyncio、文件</span></div>`;
+      return;
+    }
+    searchResults.innerHTML = list
+      .map((x, i) => {
+        const title = escapeHTML(x.title).replace(
+          new RegExp(escapeReg(q), "ig"),
+          (m) => `<mark>${m}</mark>`
+        );
+        return `<button class="result ${i === 0 ? "active" : ""}" data-index="${i}" style="--c:${x.branch.color}">
+          <span class="result-dot"></span>
+          <span class="result-main">
+            <span class="result-title">${title}</span>
+            <span class="result-path">${escapeHTML(x.sub)}</span>
+          </span>
+          <span class="result-type">${x.type === "branch" ? "模块" : x.type === "topic" ? "主题" : "知识点"}</span>
+        </button>`;
+      })
+      .join("");
+  }
+
+  function escapeReg(s) {
+    return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  }
+
+  function openSearchResults() {
+    if (!searchInput.value.trim()) return;
+    state.searchResults = search(searchInput.value);
+    state.searchActive = 0;
+    state.searchOpen = true;
+    renderSearchResults(state.searchResults, searchInput.value.trim());
+    searchResults.classList.add("open");
+  }
+
+  function closeSearchResults() {
+    state.searchOpen = false;
+    searchResults.classList.remove("open");
+  }
+
+  function goToSearchResult(item) {
+    if (!item) return;
+    const node = item.node;
+    if (node.type === "branch") {
+      state.expanded = new Set([node.id]);
+    } else if (node.type === "topic") {
+      state.expanded = new Set([node.branch.id, node.id]);
+    } else {
+      state.expanded = new Set([node.branch.id, node.topic.id]);
+    }
+    state.selectedId = node.id;
+    renderMap();
+    openDetail(node);
+    closeSearchResults();
+    searchInput.value = item.title;
+    toast(`已定位：${item.title}`);
+  }
+
+  searchInput.addEventListener("input", openSearchResults);
+  searchInput.addEventListener("focus", openSearchResults);
+
+  searchInput.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      closeSearchResults();
+      searchInput.blur();
+      return;
+    }
+    if (!state.searchOpen) openSearchResults();
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      state.searchActive = Math.min(state.searchActive + 1, state.searchResults.length - 1);
+      $$(".result", searchResults).forEach((el, i) => el.classList.toggle("active", i === state.searchActive));
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      state.searchActive = Math.max(state.searchActive - 1, 0);
+      $$(".result", searchResults).forEach((el, i) => el.classList.toggle("active", i === state.searchActive));
+    } else if (e.key === "Enter") {
+      e.preventDefault();
+      goToSearchResult(state.searchResults[state.searchActive]);
+    }
+  });
+
+  searchResults.addEventListener("click", (e) => {
+    const el = e.target.closest(".result");
+    if (!el) return;
+    goToSearchResult(state.searchResults[Number(el.dataset.index)]);
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest(".search-wrap")) closeSearchResults();
+  });
+
+  // 平移 / 缩放
+  stage.addEventListener(
+    "wheel",
+    (e) => {
+      if (e.target.closest(".detail")) return;
+      e.preventDefault();
+      cancelViewAnim();
+      const rect = stage.getBoundingClientRect();
+      const mx = e.clientX - rect.left;
+      const my = e.clientY - rect.top;
+      const old = state.zoom;
+      const next = clamp(old * Math.exp(-e.deltaY * 0.00135), 0.1, 2.6);
+      state.panX = mx - ((mx - state.panX) / old) * next;
+      state.panY = my - ((my - state.panY) / old) * next;
+      state.zoom = next;
+      applyView();
+    },
+    { passive: false }
+  );
+
+  stage.addEventListener("pointerdown", (e) => {
+    if (e.button !== 0) return;
+    if (e.target.closest(".node, .root, .detail, .map-controls, .map-hint, .search-wrap")) return;
+    state.drag = {
+      id: e.pointerId,
+      x: e.clientX,
+      y: e.clientY,
+      panX: state.panX,
+      panY: state.panY,
+      moved: false,
+    };
+    stage.setPointerCapture(e.pointerId);
+    stage.classList.add("dragging");
+    cancelViewAnim();
+  });
+
+  stage.addEventListener("pointermove", (e) => {
+    if (!state.drag || state.drag.id !== e.pointerId) return;
+    const dx = e.clientX - state.drag.x;
+    const dy = e.clientY - state.drag.y;
+    if (Math.abs(dx) + Math.abs(dy) > 4) state.drag.moved = true;
+    state.panX = state.drag.panX + dx;
+    state.panY = state.drag.panY + dy;
+    applyView();
+  });
+
+  function endDrag(e) {
+    if (!state.drag || state.drag.id !== e.pointerId) return;
+    const moved = state.drag.moved;
+    state.drag = null;
+    stage.classList.remove("dragging");
+    if (!moved && !e.target.closest(".node, .root, .detail, .map-controls")) {
+      closeDetail();
+    }
+  }
+  stage.addEventListener("pointerup", endDrag);
+  stage.addEventListener("pointercancel", endDrag);
+
+  stage.addEventListener("dblclick", (e) => {
+    if (!e.target.closest(".node, .root, .detail, .map-controls")) fitView(true);
+  });
+
+  $("#zoomInBtn").addEventListener("click", () => zoomBy(1.22));
+  $("#zoomOutBtn").addEventListener("click", () => zoomBy(1 / 1.22));
+  $("#fitBtn").addEventListener("click", () => fitView(true));
+  $("#centerBtn").addEventListener("click", () => fitView(true));
+
+  function zoomBy(factor) {
+    cancelViewAnim();
+    const W = stage.clientWidth;
+    const H = stage.clientHeight;
+    const cx = W / 2;
+    const cy = H / 2;
+    const next = clamp(state.zoom * factor, 0.1, 2.6);
+    state.panX = cx - ((cx - state.panX) / state.zoom) * next;
+    state.panY = cy - ((cy - state.panY) / state.zoom) * next;
+    state.zoom = next;
+    applyView();
+  }
+
+  // 键盘
+  document.addEventListener("keydown", (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+      e.preventDefault();
+      searchInput.focus();
+      searchInput.select();
+      return;
+    }
+    if (e.key === "Escape") {
+      if (state.searchOpen) closeSearchResults();
+      else if ($(".modal.open")) closeModal($(".modal.open").id);
+      else closeDetail();
+      return;
+    }
+    if (e.target.matches("input, textarea")) return;
+    if (e.key === "+" || e.key === "=") zoomBy(1.2);
+    if (e.key === "-" || e.key === "_") zoomBy(1 / 1.2);
+    if (e.key === "0") fitView(true);
+  });
+
+  // 模态框
+  function openModal(id) {
+    $("#" + id)?.classList.add("open");
+  }
+  function closeModal(id) {
+    $("#" + id)?.classList.remove("open");
+  }
+  $$("[data-close]").forEach((el) => {
+    el.addEventListener("click", () => closeModal(el.dataset.close));
+  });
+  $("#routeBtn").addEventListener("click", () => openModal("routeModal"));
+  $("#sideRouteBtn").addEventListener("click", () => openModal("routeModal"));
+  $("#coverageBtn").addEventListener("click", (e) => {
+    e.preventDefault();
+    openModal("coverageModal");
+  });
+
+  // 覆盖清单
+  function renderCoverage() {
+    const cov = DATA.coverage || [];
+    $("#coverGrid").innerHTML = cov
+      .map(
+        (g) => `<div class="cover-col">
+          <h3><span>${g.chapters.length}</span>${escapeHTML(g.name)}</h3>
+          <div class="cover-list">
+            ${g.chapters.map((c) => `<div class="cover-item">${escapeHTML(c)}</div>`).join("")}
+          </div>
+        </div>`
+      )
+      .join("");
+  }
+
+  // 移动端模块列表
+  function renderMobileList() {
+    const el = $("#mobileList");
+    el.innerHTML = `
+      <div class="m-head">
+        <h2>13 个学习模块</h2>
+        <button id="mRouteBtn">学习路线</button>
+      </div>
+      <p class="m-sub">点击模块查看主题与示例 · 共 ${STATS.leaves} 个知识点、${STATS.examples} 个示例</p>
+      ${BRANCHES.map(
+        (b) => `<section class="m-branch" data-branch="${b.id}" style="--c:${b.color};--tint:${b.tint}">
+          <div class="m-branch-head">
+            <span class="m-num">${b.num}</span>
+            <div>
+              <h3>${escapeHTML(b.title)}</h3>
+              <p>${escapeHTML(b.subtitle)}</p>
+            </div>
+            <span class="m-count">${b.topics.length} 主题</span>
+          </div>
+          <div class="m-chips">
+            ${b.topics.map((t) => `<button data-topic="${t.id}">${escapeHTML(t.title)}</button>`).join("")}
+          </div>
+        </section>`
+      ).join("")}`;
+
+    $("#mRouteBtn")?.addEventListener("click", () => openModal("routeModal"));
+    el.addEventListener("click", (e) => {
+      const chip = e.target.closest("[data-topic]");
+      if (chip) {
+        const node = NODE_MAP.get(chip.dataset.topic);
+        if (node) selectNode(node);
+        return;
+      }
+      const card = e.target.closest("[data-branch]");
+      if (!card) return;
+      const node = NODE_MAP.get(card.dataset.branch);
+      if (node) selectNode(node);
+    });
+  }
+
+  // 初始化
+  function init() {
+    renderNav();
+    renderMobileList();
+    renderCoverage();
+    updateProgress();
+    renderMap();
+    requestAnimationFrame(() => fitView(false));
+    setTimeout(() => mapHint.classList.add("show"), 500);
+    setTimeout(() => mapHint.classList.remove("show"), 6000);
+
+    // 首屏稍后重新 fit，等待字体/布局稳定
+    setTimeout(() => fitView(false), 350);
+
+    // 支持分享深链：?branch=data / ?topic=syntax__typing / ?full=1 / ?q=装饰器
+    const params = new URLSearchParams(location.search);
+    if (params.get("full") === "1") {
+      setTimeout(() => $("#expandBtn").click(), 420);
+    }
+    const branchId = params.get("branch");
+    const topicId = params.get("topic");
+    const query = params.get("q");
+    if (branchId) {
+      const b = BRANCHES.find((x) => x.id === branchId);
+      if (b) setTimeout(() => selectNode(b), 520);
+    }
+    if (topicId) {
+      const t = NODE_MAP.get(topicId);
+      if (t) setTimeout(() => selectNode(t), 520);
+    }
+    if (query) {
+      searchInput.value = query;
+      setTimeout(() => {
+        openSearchResults();
+        searchInput.focus();
+      }, 520);
+    }
+
+    window.addEventListener("resize", () => {
+      clearTimeout(init._resize);
+      init._resize = setTimeout(() => fitView(false), 180);
+    });
+  }
+
+  init();
+})();
+
+</script>
+</body>
+</html>
